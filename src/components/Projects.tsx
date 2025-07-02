@@ -17,7 +17,7 @@ const projects: Project[] = [
     image: "/images/portfolio.jpg",
     repo: "SaltedAlmond/portfolio",
     description: "A portfolio site built with Next.js and Tailwind CSS",
-    live: "https://your-site.com",
+    live: null,
   },
   {
     name: "Worlds Apart",
