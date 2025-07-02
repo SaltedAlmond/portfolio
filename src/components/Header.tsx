@@ -20,7 +20,7 @@ export default function Header() {
   const negativeMargin = 5; // px, adjust for perfect touch
 
   return (
-    <header className={`p-4 sticky top-0 z-50 border-b border-gray-200 flex items-center px-8 transition-all 
+    <header className={`bg-[#9296a1] p-4 sticky top-0 z-50 border-b border-gray-200 flex items-center px-8 transition-all 
       ${ scrolled ? 'bg-transparent shadow-none border-none' : 'bg-white shadow-md border-b border-gray-200'}`}>
       <p className={`text-4xl font-bold flex-shrink-0 transition-opacity duration-500
         ${ scrolled ? 'opacity-0' : 'opacity-100'}`}>
@@ -29,7 +29,7 @@ export default function Header() {
 
       <nav
         className={`flex flex-grow items-center text-lg font-semibold text-gray-700 uppercase tracking-wide transition-all duration-300 ${
-          scrolled ? 'justify-end pr-4' : 'justify-center gap-8 pl-50'
+          scrolled ? 'text-white justify-end pr-4' : 'justify-center gap-8 pl-50'
         }`}
         style={{ gap: scrolled ? 0 : undefined }}
       >
@@ -58,7 +58,7 @@ export default function Header() {
                 padding: 0,
               }}
             >
-              <Icon size={24} />
+              <Icon size={15} />
             </div>
 
             {/* Show label only when not scrolled */}

@@ -7,7 +7,7 @@ import { useState, useEffect, useRef } from "react";
 type Experience = {
   title: string;
   company: string;
-  details: string;
+  details: string[];
   startYear: number;
   endYear: number;
   startMonth?: number;
@@ -23,9 +23,16 @@ const experiences: Experience[] = [
     endMonth: 3,
     title: "Software Developer - Upgrade",
     company: "Case IQ",
-    details:
-      "Worked on upgrading systems, improving performance, and deploying new features using Node.js and Docker.",
     type: 'work',
+    details: [
+      "Upgraded 100% of client systems from a legacy codebase, rewriting custom features to boost performance and retain all existing features.",
+      "Ensured smooth transitions post-upgrade for 80+ clients by selectively running essential Bash and SQL commands, reducing downtime by ~30% and improving maintainability – Bash, PostgreSQL.",
+      "Authored internal documentation on upgrade-specific features and known issues, reducing development time and post-deployment bugs by ~40% across teams – Confluence, GitHub.",
+      "Delivered full-stack features for B2B apps, enhancing UI and backend functionality for thousands of users.",
+      "Partnered with clients and analysts to resolve critical issues, contributing to high client satisfaction through clear communication – Backbone.js, Node.js, PostgreSQL.",
+      "Built and tested internal APIs to support new features, using Postico.",
+      "Leveraged Jenkins, Docker, and Vim for CI/CD, automated testing, and efficient debugging in staging environments, supporting User Acceptance Testing (UAT)."
+    ],
   },
   {
     startYear: 2023,
@@ -34,8 +41,11 @@ const experiences: Experience[] = [
     endMonth: new Date().getMonth() + 1,
     title: "Part-time Professor",
     company: "Algonquin College",
-    details:
-      "Taught C++ programming, object-oriented design, and applied mathematics for game development.",
+    details: [
+      "Teach C++ programming, object-oriented design, and applied math for game physics and mechanics to prepare students for industry roles.",
+      "Introduce version control, agile workflows, and structured debugging to boost student readiness for real-world development - GitHub, Visual Studio.",
+      "Developed interactive resources and hands-on exercises to simplify complex game development concepts, boosting student engagement and success.",
+    ],
     type: 'work',
   },
   {
@@ -45,8 +55,11 @@ const experiences: Experience[] = [
     endMonth: 2,
     title: "Software Developer - Delivery",
     company: "Case IQ",
-    details:
-      "Delivered client-specific features and improved system maintainability using Backbone.js and GitHub.",
+    details: [
+      "Collaborated with the Delivery team during sprint planning to scope and prioritize tickets, consistently completing tasks ahead of schedule - Jira, GitHub.",
+      "Implemented custom UI/UX functionality based on client requirements, ensuring alignment with brand guidelines and usability best practices - Backbone.js, HTML, CSS, JavaScript.",
+
+    ],
     type: 'work',
   },
   {
@@ -54,10 +67,13 @@ const experiences: Experience[] = [
     endYear: 2021,
     startMonth: 1,
     endMonth: 12,
-    title: "Lead Quality Assurance Engineer",
+    title: "Lead Application Tester",
     company: "Case IQ",
-    details:
-      "Delivered client-specific features and improved system maintainability using Backbone.js and GitHub.",
+    details: [
+      "Led QA team in front-end testing and documentation using Jira and Confluence.",
+      "Proactively uncovered critical bugs early, preventing production issues and earning a QA lead role within the first month.",
+
+    ],
     type: 'work',
   },
   {
@@ -67,8 +83,9 @@ const experiences: Experience[] = [
     endMonth: 11,
     title: "3D Technical Artist",
     company: "Algonquin College of Applied Arts and Technology",
-    details:
-      "Delivered client-specific features and improved system maintainability using Backbone.js and GitHub.",
+    details: [
+
+    ],
     type: 'work',
   },
   {
@@ -78,8 +95,9 @@ const experiences: Experience[] = [
     endMonth: 5,
     title: "3D Artist",
     company: "Canada Science and Technology Museums Corporation",
-    details:
-      "Delivered client-specific features and improved system maintainability using Backbone.js and GitHub.",
+    details: [
+
+    ],
     type: 'work',
   },
   {
@@ -89,7 +107,9 @@ const experiences: Experience[] = [
     endMonth: 12,
     title: "Computer Engineering Technology – Computing Science",
     company: "Algonquin College, Ottawa, Ontario",
-    details: "Specialized in international supply chain optimization and data analysis.",
+    details: [
+
+    ],
     type: 'education',
   },
   {
@@ -99,7 +119,9 @@ const experiences: Experience[] = [
     endMonth: 4,
     title: "Game Development",
     company: "Algonquin College, Ottawa, Ontario",
-    details: "Specialized in international supply chain optimization and data analysis.",
+    details: [
+
+    ],
     type: 'education',
   },
 ];
@@ -148,22 +170,22 @@ export default function Journey() {
 
   return (
     <section
-      className="bg-gray-100 py-12 px-4 relative"
+      className="bg-[#535763] py-12 px-4 relative"
       style={{ 
         minHeight: minDateY + 200, 
       }}
     >
-      <h2 className="text-3xl font-bold text-center mb-12">My Journey</h2>
+      <h2 className="text-white text-3xl font-bold text-center mb-12">My Journey</h2>
 
        {/* Legend */}
       <div className="flex justify-center gap-10 mb-15 pr-2">
         <div className="flex items-center gap-2">
-          <span className="text-gray-700 text-sm font-medium">Experience</span>
-          <span className="w-4 h-4 rounded-full bg-blue-100 border border-blue-300"></span>
+          <span className="text-white text-sm font-medium">Experience</span>
+          <span className="w-4 h-4 rounded-full bg-[#6390bf]"></span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="w-4 h-4 rounded-full bg-green-200 border border-green-400"></span>
-          <span className="text-gray-700 text-sm font-medium">Education</span>
+          <span className="w-4 h-4 rounded-full bg-[#f7a73e]"></span>
+          <span className="text-white text-sm font-medium">Education</span>
         </div>
       </div>
 
@@ -202,7 +224,7 @@ export default function Journey() {
           const height = bottom - top;
 
           const isEducation = exp.type === 'education';
-          const baseColor = isEducation ? 'bg-green-100 hover:bg-green-200' : 'bg-blue-50 hover:bg-blue-100';
+          const baseColor = isEducation ? 'bg-[#f7a73e] hover:bg-[#fab75f]' : 'bg-[#6390bf] hover:bg-[#80b7e0]';
           const isOpen = openIndex === i;
 
           const ref = useRef(null);
@@ -233,24 +255,28 @@ export default function Journey() {
                 height: isOpen ? undefined : height,
               }}
             >
-              <h3 className="text-lg font-bold">{exp.title}</h3>
-              <p className="text-sm text-gray-600">{exp.company}</p>
-              <p className="italic text-sm text-gray-600">
+              <h3 className="text-white text-lg font-bold">{exp.title}</h3>
+              <p className="text-sm text-white">{exp.company}</p>
+              <p className="italic text-sm text-white">
                 {exp.startMonth && monthNames[exp.startMonth - 1]} {exp.startYear} -{" "}
                 {exp.endMonth && monthNames[exp.endMonth - 1]} {exp.endYear}
               </p>
               {isOpen && (
-                <motion.p
-                  className="mt-4 text-gray-700 text-sm whitespace-pre-wrap"
+                <motion.div
+                  className="text-white mt-4 text-sm whitespace-pre-wrap"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.3 }}
                 >
-                  {exp.details}
-                </motion.p>
+                  <ul className="list-disc pl-6 space-y-2">
+                    {exp.details.map((point, i) => (
+                      <li key={i}>{point}</li>
+                    ))}
+                  </ul>
+                </motion.div>
               )}
               {!isOpen && (
-                <p className="mt-2 text-gray-500 text-xs italic">Click to expand</p>
+                <p className="text-white mt-2 text-xs italic">Click to expand</p>
               )}
             </motion.div>
           );

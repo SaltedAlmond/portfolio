@@ -5,22 +5,22 @@ import { TbFileCv } from "react-icons/tb";
 
 const contactIcons = [
   {
-    icon: <FaLinkedin className="text-[2.75rem] text-[#0077B5]" />,
+    icon: <FaLinkedin className="text-[2.75rem] text-white" />,
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/alimonette",
   },
   {
-    icon: <MdOutlineEmail className="text-[2.75rem] text-[#D44638]" />,
+    icon: <MdOutlineEmail className="text-[2.75rem] text-white" />,
     label: "Email",
     href: "mailto:amonette55@gmail.com",
   },
   {
-    icon: <FaGithub className="text-[2.75rem] text-[#181717]" />,
+    icon: <FaGithub className="text-[2.75rem] text-white" />,
     label: "GitHub",
     href: "https://github.com/SaltedAlmond",
   },
   {
-    icon: <TbFileCv className="text-[2.75rem] text-[#4A90E2]" />,
+    icon: <TbFileCv className="text-[2.75rem] text-white" />,
     label: "Resume",
     href: "/Resume.pdf",
     download: true,
@@ -29,7 +29,7 @@ const contactIcons = [
 
 export default function Contact() {
   return (
-    <div className="bg-gray-100">
+    <div className="bg-[#535763]">
       <div className="p-8 max-w-6xl mx-auto">
         <div className="flex justify-center gap-6 flex-wrap mb-12">
           {contactIcons.map((contact, i) => (
@@ -42,7 +42,7 @@ export default function Contact() {
               className="flex flex-col items-center group transition-transform transform hover:scale-110 cursor-pointer"
             >
               {contact.icon}
-              <span className="mt-2 text-sm opacity-0 group-hover:opacity-100 transition-opacity">
+              <span className="mt-2 text-sm text-white opacity-0 group-hover:opacity-100 transition-opacity">
                 {contact.label}
               </span>
             </a>
