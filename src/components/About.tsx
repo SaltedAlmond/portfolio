@@ -16,7 +16,7 @@ export default function About() {
           </p>
           <div className="self-start mt-8">
             <a
-              href="/Resume.pdf"
+              href="/resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block px-4 py-2 border-2 border-white-600 text-white rounded-lg font-semibold hover:bg-blue-500 hover:text-white transition-colors duration-300"
