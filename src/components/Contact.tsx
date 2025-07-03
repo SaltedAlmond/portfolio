@@ -29,26 +29,34 @@ const contactIcons = [
 
 export default function Contact() {
   return (
-    <div className="bg-[#535763]">
-      <div className="p-8 max-w-6xl mx-auto">
-        <div className="flex justify-center gap-6 flex-wrap mb-12">
-          {contactIcons.map((contact, i) => (
-            <a
-              key={i}
-              href={contact.href}
-              target={contact.href.startsWith("http") ? "_blank" : undefined}
-              rel={contact.href.startsWith("http") ? "noopener noreferrer" : undefined}
-              download={contact.download ? true : undefined}
-              className="flex flex-col items-center group transition-transform transform hover:scale-110 cursor-pointer"
-            >
-              {contact.icon}
-              <span className="mt-2 text-sm text-white opacity-0 group-hover:opacity-100 transition-opacity">
-                {contact.label}
-              </span>
-            </a>
-          ))}
-        </div>
+    <section
+      id="contact"
+      className="bg-[#535763] min-h-screen flex flex-col items-center justify-center px-4 py-12 text-center"
+    >
+      <h2 className="text-3xl text-blue-100 font-bold mb-6">Let&apos;s Connect</h2>
+
+      <p className="text-white max-w-xl mb-12 px-4">
+        Feel free to reach out or connect with me on LinkedIn or GitHub — I&apos;m always open to emails! 
+        You can also download my resume below.
+      </p>
+
+      <div className="flex justify-center gap-6 flex-wrap">
+        {contactIcons.map((contact, i) => (
+          <a
+            key={i}
+            href={contact.href}
+            target={contact.href.startsWith("http") ? "_blank" : undefined}
+            rel={contact.href.startsWith("http") ? "noopener noreferrer" : undefined}
+            download={contact.download ? true : undefined}
+            className="flex flex-col items-center group transition-transform transform hover:scale-110 cursor-pointer"
+          >
+            {contact.icon}
+            <span className="mt-2 text-sm text-white opacity-0 group-hover:opacity-100 transition-opacity">
+              {contact.label}
+            </span>
+          </a>
+        ))}
       </div>
-    </div>
+    </section>
   );
 }

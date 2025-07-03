@@ -58,7 +58,6 @@ const experiences: Experience[] = [
     details: [
       "Collaborated with the Delivery team during sprint planning to scope and prioritize tickets, consistently completing tasks ahead of schedule - Jira, GitHub.",
       "Implemented custom UI/UX functionality based on client requirements, ensuring alignment with brand guidelines and usability best practices - Backbone.js, HTML, CSS, JavaScript.",
-
     ],
     type: 'work',
   },
@@ -72,7 +71,6 @@ const experiences: Experience[] = [
     details: [
       "Led QA team in front-end testing and documentation using Jira and Confluence.",
       "Proactively uncovered critical bugs early, preventing production issues and earning a QA lead role within the first month.",
-
     ],
     type: 'work',
   },
@@ -83,9 +81,7 @@ const experiences: Experience[] = [
     endMonth: 11,
     title: "3D Technical Artist",
     company: "Algonquin College of Applied Arts and Technology",
-    details: [
-
-    ],
+    details: [],
     type: 'work',
   },
   {
@@ -95,9 +91,7 @@ const experiences: Experience[] = [
     endMonth: 5,
     title: "3D Artist",
     company: "Canada Science and Technology Museums Corporation",
-    details: [
-
-    ],
+    details: [],
     type: 'work',
   },
   {
@@ -107,9 +101,7 @@ const experiences: Experience[] = [
     endMonth: 12,
     title: "Computer Engineering Technology – Computing Science",
     company: "Algonquin College, Ottawa, Ontario",
-    details: [
-
-    ],
+    details: [],
     type: 'education',
   },
   {
@@ -119,9 +111,7 @@ const experiences: Experience[] = [
     endMonth: 4,
     title: "Game Development",
     company: "Algonquin College, Ottawa, Ontario",
-    details: [
-
-    ],
+    details: [],
     type: 'education',
   },
 ];
@@ -130,8 +120,21 @@ function yearMonthToDecimal(year: number, month = 1) {
   return year + (month - 1) / 12;
 }
 
+function useIsMobile(threshold = 768) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const update = () => setIsMobile(window.innerWidth < threshold);
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, [threshold]);
+
+  return isMobile;
+}
+
 export default function Journey() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [openIndex, setOpenIndex] = useState<string | null>(null);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -141,44 +144,33 @@ export default function Journey() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  // Find min and max date decimals across experiences
-  const minDateDecimal = Math.min(
-    ...experiences.map(e => yearMonthToDecimal(e.startYear, e.startMonth || 1))
-  );
-  const maxDateDecimal = Math.max(
-    ...experiences.map(e => yearMonthToDecimal(e.endYear, e.endMonth || 12))
-  );
+  const sortedExperiences = experiences.slice().sort((a, b) => {
+    const aDec = yearMonthToDecimal(a.endYear, a.endMonth || 12);
+    const bDec = yearMonthToDecimal(b.endYear, b.endMonth || 12);
+    return bDec - aDec;
+  });
 
-  const timelineHeight = 1200; // total vertical timeline height in px (adjust as needed)
-  const topPadding = 50; // padding from top for breathing room
+  const experiencesByYear: Record<number, Experience[]> = {};
+  for (const exp of sortedExperiences) {
+    if (!experiencesByYear[exp.endYear]) experiencesByYear[exp.endYear] = [];
+    experiencesByYear[exp.endYear].push(exp);
+  }
 
-  const heightPerDecimal = timelineHeight / (maxDateDecimal - minDateDecimal);
-
-  const minDateY = getYPosition(minDateDecimal);
+  const yearsSortedDesc = Object.keys(experiencesByYear)
+    .map(Number)
+    .sort((a, b) => b - a);
 
   const monthNames = [
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
   ];
 
-  // Map a date decimal to px offset from top, with padding
-  function getYPosition(dateDecimal: number) {
-    // invert so maxDateDecimal is at top (topPadding),
-    // minDateDecimal is at bottom (topPadding + timelineHeight)
-    return topPadding + (maxDateDecimal - dateDecimal) * heightPerDecimal;
-  }
+  const isMobile = useIsMobile();
 
   return (
-    <section
-      className="bg-[#535763] py-12 px-4 relative"
-      style={{ 
-        minHeight: minDateY + 200, 
-      }}
-    >
+    <section className="bg-[#535763] py-12 px-4 relative min-h-[600px]">
       <h2 className="text-white text-3xl font-bold text-center mb-12">My Journey</h2>
-
-       {/* Legend */}
-      <div className="flex justify-center gap-10 mb-15 pr-2">
+      <div className="flex justify-center gap-10 mb-10 flex-wrap">
         <div className="flex items-center gap-2">
           <span className="text-white text-sm font-medium">Experience</span>
           <span className="w-4 h-4 rounded-full bg-[#6390bf]"></span>
@@ -190,95 +182,104 @@ export default function Journey() {
       </div>
 
       <div className="relative max-w-4xl mx-auto">
-        {/* Timeline vertical line */}
         <div
           className="absolute left-1/2 w-1 bg-gray-300"
-          style={{ height: timelineHeight, top: topPadding, transform: 'translateX(-50%)' }}
+          style={{ top: 0, bottom: 0, transform: 'translateX(-50%)' }}
         />
 
-        {/* Year markers */}
-        {Array.from(
-          { length: Math.ceil(maxDateDecimal) - Math.max(Math.floor(minDateDecimal), 2015) + 1 },
-          (_, idx) => Math.ceil(maxDateDecimal) - idx
-        ).map(year => {
-          // position each year on timeline
-          const yPos = getYPosition(year);
+        {yearsSortedDesc.map((year) => {
+          const exps = experiencesByYear[year];
+          const blockHeight = exps.length * 120;
+
           return (
             <div
               key={year}
-              className="absolute left-1/2 -translate-x-1/2 bg-white px-3 rounded-full border border-gray-400 select-none text-sm text-gray-600"
-              style={{ top: yPos - 12 /* half of approx label height */ }}
-            >
-              {year}
-            </div>
-          );
-        })}
-
-        {/* Experience blobs */}
-        {experiences.map((exp, i) => {
-          const startDec = yearMonthToDecimal(exp.startYear, exp.startMonth || 1);
-          const endDec = yearMonthToDecimal(exp.endYear, exp.endMonth || 12);
-
-          const top = getYPosition(endDec);   // top = end date (more recent)
-          const bottom = getYPosition(startDec); // bottom = start date (older)
-          const height = bottom - top;
-
-          const isEducation = exp.type === 'education';
-          const baseColor = isEducation ? 'bg-[#f7a73e] hover:bg-[#fab75f]' : 'bg-[#6390bf] hover:bg-[#80b7e0]';
-          const isOpen = openIndex === i;
-
-          const ref = useRef(null);
-          const isInView = useInView(ref, { margin: "-50px" });
-
-          return (
-            <motion.div
-              key={i}
-              ref={ref}
-              onClick={() => setOpenIndex(openIndex === i ? null : i)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') setOpenIndex(openIndex === i ? null : i);
-              }}
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 40 }}
-              transition={{ duration: 0.6, delay: i * 0.15 }}
-              className={`cursor-pointer rounded-2xl shadow-md transition-all duration-500 ease-in-out overflow-auto
-                ${baseColor}
-                ${isOpen
-                  ? "fixed top-10 left-10 right-10 bottom-10 z-50 p-8 w-auto max-w-[90vw] max-h-[90vh]"
-                  : `absolute w-[45%] p-4 ${i % 2 === 0 ? "left-[55%]" : "right-[55%]"}`
-                }
-              `}
+              className="relative"
               style={{
-                top: isOpen ? undefined : top,
-                height: isOpen ? undefined : height,
+                height: blockHeight,
+                marginBottom: 40,
+                top: 0,
+                left: '50%',
+                transform: 'translateX(-50%)',
               }}
             >
-              <h3 className="text-white text-lg font-bold">{exp.title}</h3>
-              <p className="text-sm text-white">{exp.company}</p>
-              <p className="italic text-sm text-white">
-                {exp.startMonth && monthNames[exp.startMonth - 1]} {exp.startYear} -{" "}
-                {exp.endMonth && monthNames[exp.endMonth - 1]} {exp.endYear}
-              </p>
-              {isOpen && (
-                <motion.div
-                  className="text-white mt-4 text-sm whitespace-pre-wrap"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.3 }}
-                >
-                  <ul className="list-disc pl-6 space-y-2">
-                    {exp.details.map((point, i) => (
-                      <li key={i}>{point}</li>
-                    ))}
-                  </ul>
-                </motion.div>
-              )}
-              {!isOpen && (
-                <p className="text-white mt-2 text-xs italic">Click to expand</p>
-              )}
-            </motion.div>
+              <div
+                className="absolute left-1/2 -translate-x-1/2 bg-white px-3 rounded-full border border-gray-400 select-none text-sm text-gray-600"
+                style={{ top: -24 }}
+              >
+                {year}
+              </div>
+
+              {exps.map((exp) => {
+                const globalIndex = sortedExperiences.findIndex(e => e === exp);
+                const isEducation = exp.type === 'education';
+                const baseColor = isEducation ? 'bg-[#f7a73e] hover:bg-[#fab75f]' : 'bg-[#6390bf] hover:bg-[#80b7e0]';
+                const isOpen = openIndex === `${year}-${globalIndex}`;
+
+                const ref = useRef(null);
+                const isInView = useInView(ref, { margin: "-50px" });
+
+                const sideClass = isMobile
+                  ? 'left-1/2 -translate-x-1/2 w-[90%]'
+                  : globalIndex % 2 === 0
+                    ? 'left-[2%] w-[45%]'
+                    : 'right-[2%] w-[45%]';
+
+                const i = exps.indexOf(exp);
+
+                return (
+                  <motion.div
+                    key={globalIndex}
+                    ref={ref}
+                    onClick={() => setOpenIndex(isOpen ? null : `${year}-${globalIndex}`)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') setOpenIndex(isOpen ? null : `${year}-${globalIndex}`);
+                    }}
+                    initial={{ opacity: 0, y: 40 }}
+                    animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 40 }}
+                    transition={{ duration: 0.6, delay: i * 0.1 }}
+                    className={`cursor-pointer rounded-2xl shadow-md transition-all duration-500 ease-in-out overflow-auto
+                      ${baseColor}
+                      ${isOpen
+                        ? "fixed top-4 left-4 right-4 bottom-4 z-50 p-4 md:p-8 w-auto max-w-[95vw] max-h-[90vh]"
+                        : `absolute p-4 ${sideClass}`
+                      }
+                    `}
+                    style={{
+                      top: isOpen ? undefined : i * 120,
+                      minHeight: isOpen ? undefined : 160,
+                      maxHeight: isOpen ? undefined : 200,
+                      overflow: isOpen ? 'auto' : 'hidden',
+                    }}
+                  >
+                    <h3 className="text-white text-lg font-bold break-words">{exp.title}</h3>
+                    <p className="text-sm text-white break-words">{exp.company}</p>
+                    <p className="italic text-sm text-white">
+                      {exp.startMonth && monthNames[exp.startMonth - 1]} {exp.startYear} - {exp.endMonth && monthNames[exp.endMonth - 1]} {exp.endYear}
+                    </p>
+                    {isOpen && (
+                      <motion.div
+                        className="text-white mt-4 text-sm whitespace-pre-wrap"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.3 }}
+                      >
+                        <ul className="list-disc pl-6 space-y-2">
+                          {exp.details.map((point, i) => (
+                            <li key={i}>{point}</li>
+                          ))}
+                        </ul>
+                      </motion.div>
+                    )}
+                    {!isOpen && (
+                      <p className="text-white mt-2 text-xs italic">Click to expand</p>
+                    )}
+                  </motion.div>
+                );
+              })}
+            </div>
           );
         })}
       </div>

@@ -13,28 +13,29 @@ type TechItem = {
 };
 
 const programmingTech: TechItem[] = [
-  { icon: <FaHtml5 className="text-[2.75rem]" color="#e34f26" />, label: "HTML5" },
-  { icon: <FaCss3Alt className="text-[2.75rem]" color="#1572B6" />, label: "CSS3" },
-  { icon: <FaJsSquare className="text-[2.75rem]" color="#f7df1e" />, label: "JavaScript" },
-  { icon: <SiTypescript className="text-[2.75rem]" color="#3178c6" />, label: "TypeScript" },
-  { icon: <FaReact className="text-[2.75rem]" color="#61DBFB" />, label: "React" },
-  { icon: <SiNextdotjs className="text-[2.75rem]" color="white" />, label: "Next.js" },
-  { icon: <DiBackbone className="text-[3rem]" color="#0071B5" />, label: "Backbone.js" },
-  { icon: <FaNodeJs className="text-[2.75rem]" color="#43853d" />, label: "Node.js" },
-  { icon: <FaDocker className="text-[2.75rem]" color="#2496ED" />, label: "Docker" },
-  { icon: <FaGithub className="text-[2.75rem]" color="white" />, label: "GitHub" },
-  { icon: <DiVisualstudio className="text-[3rem]" color="#5c2d91" />, label: "Visual Studio" },
-  { icon: <PiFileCpp className="text-[2.75rem]" color="#00599C" />, label: "C++" },
-  { icon: <SiUnrealengine className="text-[2.75rem]" color="white" />, label: "Unreal Engine" },
+  { icon: <FaHtml5 className="text-[2.75rem] text-red-400" />, label: "HTML5" },
+  { icon: <FaCss3Alt className="text-[2.75rem] text-blue-400" />, label: "CSS3" },
+  { icon: <FaJsSquare className="text-[2.75rem] text-yellow-400" />, label: "JavaScript" },
+  { icon: <SiTypescript className="text-[2.75rem] text-sky-400" />, label: "TypeScript" },
+  { icon: <FaReact className="text-[2.75rem] text-cyan-300" />, label: "React" },
+  { icon: <SiNextdotjs className="text-[2.75rem] text-neutral-300" />, label: "Next.js" },
+  { icon: <DiBackbone className="text-[3rem] text-indigo-400" />, label: "Backbone.js" },
+  { icon: <FaNodeJs className="text-[2.75rem] text-green-400" />, label: "Node.js" },
+  { icon: <FaDocker className="text-[2.75rem] text-blue-400" />, label: "Docker" },
+  { icon: <FaGithub className="text-[2.75rem] text-zinc-300" />, label: "GitHub" },
+  { icon: <DiVisualstudio className="text-[3rem] text-purple-400" />, label: "Visual Studio" },
+  { icon: <PiFileCpp className="text-[2.75rem] text-blue-500" />, label: "C++" },
+  { icon: <SiUnrealengine className="text-[2.75rem] text-white" />, label: "Unreal Engine" },
 ];
 
 export default function Technologies(): JSX.Element {
-  const repeatedTech = [...programmingTech, ...programmingTech]; // duplicate
+  
+  const repeatedTech = [...programmingTech, ...programmingTech, ...programmingTech];
 
   return (
-    <div className="p-8 max-w-6xl mx-auto overflow-hidden">
-      <div className="relative flex flex-col items-center border-2 border-white rounded-2xl py-6 px-6">
-        <h2 className="absolute -top-4 px-4 text-white text-2xl font-semibold bg-[#303237]">
+    // <div className="p-8 max-w-6xl mx-auto overflow-hidden">
+      <div className="relative flex flex-col items-center border-2 border-blue-100 rounded-2xl py-4 px-6">
+        <h2 className="absolute -top-4 px-4 text-blue-100 text-2xl font-semibold bg-[#303237]">
           My Technologies
         </h2>
 
@@ -55,7 +56,7 @@ export default function Technologies(): JSX.Element {
             </div>
           </div>
         </div>
-      </div>
+      {/* </div> */}
 
       <style jsx>{`
         .marquee-track {
@@ -66,8 +67,8 @@ export default function Technologies(): JSX.Element {
 
         .marquee-content {
           display: flex;
-          width: fit-content;
-          animation: scroll 25s linear infinite;
+          width: max-content;
+          animation: scroll 40s linear infinite;
         }
 
         @keyframes scroll {
@@ -75,7 +76,7 @@ export default function Technologies(): JSX.Element {
             transform: translateX(0%);
           }
           100% {
-            transform: translateX(-50%);
+            transform: translateX(-33.333%);
           }
         }
       `}</style>
