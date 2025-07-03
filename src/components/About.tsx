@@ -12,7 +12,7 @@ export default function About() {
         <div className="flex-1 flex flex-col md:pl-20 text-center md:text-left">
           <h1 className="text-blue-300 text-4xl font-bold mb-4">Hi, I&apos;m Ali</h1>
           <p className="text-blue-100 text-lg">
-            A professor and software developer with a strong interest in building thoughtful, user-friendly applications. I care a lot about clean design, UI/UX, and making tools that are both powerful and easy to use. Whether I’m coding, teaching, or experimenting with new ideas, I love creating things that make a difference. Also, I might be one of the shortest volleyball players you’ll meet — but I still play like I’m 6 feet tall.
+            A professor and software developer with a strong interest in building thoughtful, user-friendly applications. I care a lot about clean design, UI/UX, and making tools that are both powerful and easy to use. Whether I’m coding, teaching, or experimenting with new ideas, I love creating things that make a difference. Also, I might be one of the shortest volleyball players you’ll meet — but I still play like I’m 6 feet tall!
           </p>
           <div className="mt-8">
             <a
