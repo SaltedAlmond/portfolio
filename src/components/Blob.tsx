@@ -49,8 +49,9 @@ export default function Blob({
             animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 40 }}
             transition={{ duration: 0.6, delay: i * 0.1 }}
             className={`absolute p-4 rounded-2xl ${baseColor} ${sideClass} shadow-md cursor-default select-none
-                flex items-center justify-between
-            `}
+                flex items-center justify-between border-2 ${
+                exp.type === 'work' ? 'border-blue-500' : 'border-orange-400'
+            }`}
             style={{
                 top: i * 120,
                 minHeight: 160,

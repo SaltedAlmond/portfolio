@@ -31,7 +31,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="bg-[#535763] min-h-screen flex flex-col items-center justify-center px-4 py-12 text-center"
+      className="bg-[#0d121e] min-h-screen flex flex-col items-center justify-center px-4 py-12 text-center"
     >
       <h2 className="text-3xl text-blue-100 font-bold mb-6">Let&apos;s Connect</h2>
 

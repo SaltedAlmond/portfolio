@@ -171,7 +171,7 @@ export default function Journey() {
   const isMobile = useIsMobile();
 
   return (
-    <section className="bg-[#535763] py-12 px-4 relative min-h-[600px]">
+    <section className="bg-[#161d2f] py-12 px-4 relative min-h-[600px]">
       <h2 className="text-white text-3xl font-bold text-center mb-12">My Journey</h2>
       <div className="flex justify-center gap-5 mb-10 flex-wrap mr-2">
         <div className="flex items-center gap-2">
@@ -186,7 +186,7 @@ export default function Journey() {
 
       <div className="relative max-w-4xl mx-auto">
         <div
-          className="absolute left-1/2 w-1 bg-gray-300"
+          className="absolute left-1/2 w-0.5 bg-gray-500"
           style={{ top: 0, bottom: 0, transform: 'translateX(-50%)' }}
         />
 
@@ -207,8 +207,8 @@ export default function Journey() {
               }}
             >
               <div
-                className="absolute left-1/2 -translate-x-1/2 bg-white px-3 rounded-full border border-gray-400 select-none text-sm text-gray-600"
-                style={{ top: -24 }}
+                className="absolute left-1/2 -translate-x-1/2 bg-[#161d2f] px-3 py-4 rounded-full select-none text-sm text-gray-400"
+                style={{ top: -10 }}
               >
                 {year}
               </div>
@@ -216,8 +216,8 @@ export default function Journey() {
               {exps.map((exp) => {
                 const globalIndex = sortedExperiences.findIndex(e => e === exp);
                 const isEducation = exp.type === 'education';
-                const baseColor = isEducation ? 'bg-[#f7a73e] hover:bg-[#fab75f]' : 'bg-[#6390bf] hover:bg-[#80b7e0]';
-                const isOpen = openIndex === `${year}-${globalIndex}`;
+                const baseColor = isEducation ? 'bg-gradient-to-b from-[#f8b434] via-orange-400 to-[#f8ac28]' : 'bg-gradient-to-b from-[#4fa1da] via-blue-500 to-[#4fa1da]';
+                // const isOpen = openIndex === `${year}-${globalIndex}`;
 
                 const ref = useRef(null);
                 const isInView = useInView(ref, { margin: "-50px" });

@@ -34,25 +34,26 @@ export default function Technologies(): JSX.Element {
 
   return (
     // <div className="p-8 max-w-6xl mx-auto overflow-hidden">
-      <div className="relative flex flex-col items-center border-2 border-blue-100 rounded-2xl py-4 px-6">
-        <h2 className="absolute -top-4 px-4 text-blue-100 text-2xl font-semibold bg-[#303237]">
-          My Technologies
-        </h2>
-
-        <div className="w-full mt-8 overflow-hidden">
-          <div className="marquee-track">
-            <div className="marquee-content flex flex-row whitespace-nowrap">              
-              {repeatedTech.map((tech, i) => (
-                <div
-                  key={i}
-                  className="flex flex-col items-center min-w-[80px] mx-6 group cursor-pointer"
-                >
-                  {tech.icon}
-                  <span className="text-white mt-2 text-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                    {tech.label}
-                  </span>
-                </div>
-              ))}
+      <div className="relative p-[2px] rounded-2xl bg-gradient-to-r from-blue-600 via-blue-300 to-blue-600">
+          <div className="flex flex-col items-center rounded-2xl py-4 px-6 bg-[#0d121e]">
+            <h2 className="absolute -top-4 px-4 text-blue-300 text-2xl font-semibold bg-[#0d121e]">
+              My Technologies
+            </h2>
+          <div className="w-full mt-8 overflow-hidden">
+            <div className="marquee-track">
+              <div className="marquee-content flex flex-row whitespace-nowrap">              
+                {repeatedTech.map((tech, i) => (
+                  <div
+                    key={i}
+                    className="flex flex-col items-center min-w-[80px] mx-6 group cursor-pointer"
+                  >
+                    {tech.icon}
+                    <span className="text-white mt-2 text-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                      {tech.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
