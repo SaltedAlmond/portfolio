@@ -100,7 +100,7 @@ const experiences: Experience[] = [
     endYear: 2021,
     startMonth: 9,
     endMonth: 12,
-    title: "Computer Engineering Technology – Computing Science",
+    title: "Computer Engineering",
     company: "Algonquin College, Ottawa, Ontario",
     details: [],
     type: 'education',
@@ -145,10 +145,12 @@ export default function Journey() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  const sortedExperiences = experiences.slice().sort((a, b) => {
-    const aDec = yearMonthToDecimal(a.endYear, a.endMonth || 12);
-    const bDec = yearMonthToDecimal(b.endYear, b.endMonth || 12);
-    return bDec - aDec;
+  const sortedExperiences = experiences
+  .slice()
+  .sort((a, b) => {
+    const aDec = yearMonthToDecimal(a.startYear, a.startMonth || 1);
+    const bDec = yearMonthToDecimal(b.startYear, b.startMonth || 1);
+    return aDec - bDec; // Ascending order (earliest to latest)
   });
 
   const experiencesByYear: Record<number, Experience[]> = {};
@@ -157,9 +159,9 @@ export default function Journey() {
     experiencesByYear[exp.endYear].push(exp);
   }
 
-  const yearsSortedDesc = Object.keys(experiencesByYear)
+  const yearsSortedAsc = Object.keys(experiencesByYear)
     .map(Number)
-    .sort((a, b) => b - a);
+    .sort((a, b) => a - b);
 
   const monthNames = [
     "January", "February", "March", "April", "May", "June",
@@ -171,7 +173,7 @@ export default function Journey() {
   return (
     <section className="bg-[#535763] py-12 px-4 relative min-h-[600px]">
       <h2 className="text-white text-3xl font-bold text-center mb-12">My Journey</h2>
-      <div className="flex justify-center gap-10 mb-10 flex-wrap">
+      <div className="flex justify-center gap-5 mb-10 flex-wrap mr-2">
         <div className="flex items-center gap-2">
           <span className="text-white text-sm font-medium">Experience</span>
           <span className="w-4 h-4 rounded-full bg-[#6390bf]"></span>
@@ -188,7 +190,7 @@ export default function Journey() {
           style={{ top: 0, bottom: 0, transform: 'translateX(-50%)' }}
         />
 
-        {yearsSortedDesc.map((year) => {
+        {yearsSortedAsc.map((year) => {
           const exps = experiencesByYear[year];
           const blockHeight = exps.length * 120;
 
@@ -234,8 +236,6 @@ export default function Journey() {
                     exp={exp}
                     year={year}
                     globalIndex={globalIndex}
-                    isOpen={isOpen}
-                    setOpenIndex={setOpenIndex}
                     isMobile={isMobile}
                     baseColor={baseColor}
                     sideClass={sideClass}
