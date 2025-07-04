@@ -41,7 +41,7 @@ export default function Technologies(): JSX.Element {
 
         <div className="w-full mt-8 overflow-hidden">
           <div className="marquee-track">
-            <div className="marquee-content">
+            <div className="marquee-content flex flex-row whitespace-nowrap">              
               {repeatedTech.map((tech, i) => (
                 <div
                   key={i}

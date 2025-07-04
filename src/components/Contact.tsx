@@ -22,7 +22,7 @@ const contactIcons = [
   {
     icon: <TbFileCv className="text-[2.75rem] text-white" />,
     label: "Resume",
-    href: "/Resume.pdf",
+    href: "/resume.pdf",
     download: true,
   },
 ];
