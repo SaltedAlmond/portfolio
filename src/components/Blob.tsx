@@ -24,52 +24,57 @@ type BlobProps = {
   sideClass: string;
   i: number;
   monthNames: string[];
+  top: number;
 };
 
 export default function Blob({
   exp,
-  globalIndex,
   baseColor,
   sideClass,
-  i,
   monthNames,
+  top,
+  isMobile,
 }: BlobProps) {
-    const ref = useRef(null);
-    const isInView = useInView(ref, { margin: '-50px' });
+  const ref = useRef(null);
+  const isInView = useInView(ref, { margin: '-50px' });
 
-    const startDate = `${exp.startMonth ? monthNames[exp.startMonth - 1] : ''} ${exp.startYear}`.trim();
-    const endDate = `${exp.endMonth ? monthNames[exp.endMonth - 1] : ''} ${exp.endYear}`.trim();
+  const startDate = `${exp.startMonth ? monthNames[exp.startMonth - 1] : ''} ${exp.startYear}`.trim();
+  const endDate = `${exp.endMonth ? monthNames[exp.endMonth - 1] : ''} ${exp.endYear}`.trim();
 
-    const isRightSide = sideClass.includes('right-');
+  const isLeft = sideClass === 'left';
+  const isRight = sideClass === 'right';
 
-    return (
-       <motion.div
-            ref={ref}
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 40 }}
-            transition={{ duration: 0.6, delay: i * 0.1 }}
-            className={`absolute p-4 rounded-2xl ${baseColor} ${sideClass} shadow-md cursor-default select-none
-                flex items-center justify-between border-2 ${
-                exp.type === 'work' ? 'border-blue-500' : 'border-orange-400'
-            }`}
-            style={{
-                top: i * 120,
-                minHeight: 160,
-                maxHeight: 200,
-            }}
-            >
-            <div
-                className={`text-white text-xl ${isRightSide ? 'order-2 ml-4' : 'order-1 mr-4'}`}
-            >
-                {exp.type === 'work' ? <FaBriefcase /> : <FaGraduationCap />}
-            </div>
-            <div className="flex-grow text-center order-1">
-                <h3 className="text-white text-lg font-bold break-words">{exp.title}</h3>
-                <p className="text-sm text-white break-words">{exp.company}</p>
-                <p className="italic text-sm text-white">
-                {startDate} – {endDate}
-                </p>
-            </div>
-            </motion.div>
-    );
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 20 }}
+      transition={{ duration: 0.6, delay: 0.1 }}
+      className="absolute w-full"
+      style={{ top }}
+    >
+      <div className="relative w-full flex items-center justify-center">
+        {/* Marker */}
+        <div className="absolute left-1/2 -translate-x-1/2 bg-[#161d2f] border-2 border-white rounded-full w-10 h-10 flex items-center justify-center z-20 text-white text-xl">
+          {exp.type === 'work' ? <FaBriefcase /> : <FaGraduationCap />}
+        </div>
+
+        {/* Text box */}
+        <div
+          className={`rounded-2xl p-4 shadow-md border-2 ${baseColor} ${
+            isLeft ? 'mr-auto ml-[calc(50%+2rem)] text-left' :
+            isRight ? 'ml-auto mr-[calc(50%+2rem)] text-right' :
+            'mx-auto w-[90%] text-center'
+          } ${exp.type === 'work' ? 'border-blue-500' : 'border-orange-400'}`}
+          style={{ maxWidth: '45%' }}
+        >
+          <h3 className="text-white text-lg font-bold break-words">{exp.title}</h3>
+          <p className="text-sm text-white break-words">{exp.company}</p>
+          <p className="italic text-sm text-white">
+            {startDate} – {endDate}
+          </p>
+        </div>
+      </div>
+    </motion.div>
+  );
 }

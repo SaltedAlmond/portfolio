@@ -39,8 +39,7 @@ export default function Header() {
       <div className="flex items-center justify-between max-w-6xl w-full mx-auto gap-4">
         
         {/* Name/Profile Image container with transition */}
-        <div className="w-[150px] h-10 relative">
-            {/* Name fades out */}
+        {/* <div className="w-[150px] h-10 relative">
             <p
               className={`absolute inset-0 text-2xl font-bold whitespace-nowrap flex items-center transition-opacity duration-500 bg-gradient-to-b from-blue-600 via-blue-400 to-blue-200 bg-clip-text text-transparent ${
                 isAboutSection ? 'opacity-100' : 'opacity-0'
@@ -48,7 +47,6 @@ export default function Header() {
             >
               Ali Monette
             </p>
-          {/* Image fades in */}
           <div
             className={`absolute justify-end inset-0 flex items-center transition-opacity duration-500 ${
               isAboutSection ? 'opacity-0' : 'opacity-100'
@@ -65,7 +63,7 @@ export default function Header() {
             />
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Navigation + Progress Meter with Aligned Dots */}
         <div className="flex flex-col flex-grow">
@@ -85,7 +83,7 @@ export default function Header() {
           </div>
 
           {/* Aligned progress bar within dot bounds */}
-          <div className="relative w-full h-6">
+          <div className="relative w-full h-3">
             {/* The meter range (from first dot to last) */}
             <div className="absolute left-[12.5%] right-[12.5%] top-1/2 h-1 bg-gray-700 rounded-full -translate-y-1/2" />
 
@@ -104,8 +102,8 @@ export default function Header() {
                   <div
                     className={`w-3 h-3 rounded-full border-2 transition-colors duration-300 ${
                       activeSection === href.substring(1)
-                        ? 'bg-blue-300 border-blue-300'
-                        : 'bg-gray-200 border-gray-400'
+                        ? 'scale-130 bg-blue-300'
+                        : 'scale-70 bg-gray-700'
                     }`}
                   />
                 </div>

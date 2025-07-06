@@ -10,10 +10,10 @@ export default function Home() {
   return (
     <main className="font-sans">
       <Header />
-      <section id="about" className="scroll-mt-20">
+      <section id="about">
         <About />
       </section>
-      <section id="journey" className="scroll-mt-18">
+      <section id="journey">
         <Journey />
       </section>
       <section id="projects">
