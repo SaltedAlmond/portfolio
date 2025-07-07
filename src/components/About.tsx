@@ -3,8 +3,7 @@ import Image from 'next/image';
 
 export default function About() {
   return (
-    <div className="bg-[#0d121e] min-h-screen flex flex-col items-center justify-center px-4">
-      
+      <div className="bg-[#0d121e] min-h-dvh flex flex-col items-center justify-center px-4">      
       {/* Top section: text + image side by side */}
       <div className="flex flex-col md:flex-row items-center justify-center w-full max-w-6xl gap-12 py-1 -mt-6 md:-mt-16 mb-8">
         {/* Left: About Me Text */}
