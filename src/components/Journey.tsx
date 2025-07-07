@@ -32,10 +32,21 @@ const experiences = [
     year: 2017,
     title: "3D Technical Artist",
     company: "Algonquin College of Applied Arts and Technology",
-    timeFrame: "June 2017 - November 2017",
+    timeFrame: "June 2017 – November 2017",
     type: 'work',
     description: [
-      "Full time contract for Unity VR project. 3D Modeller, Texture Artist, Lighting Artist."
+      <>
+        Full-time contract for a Unity VR project to recreate the DARE District at Algonquin College in virtual reality. Contributed as a <span className="italic">3D Modeller, Texture Artist, and Lighting Artist</span>.{" "}
+        <a
+          href="https://www.youtube.com/watch?v=Uis4SCYNjrM&list=WL"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-400 underline"
+        >
+          Watch a video tour
+        </a>
+        .
+      </>
     ],
   },
   {

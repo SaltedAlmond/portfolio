@@ -30,6 +30,7 @@ const programmingTech: TechItem[] = [
 
 export default function Technologies(): JSX.Element {
   
+  // Merge: Repeat technologies to have a seamless loop
   const repeatedTech = [...programmingTech, ...programmingTech, ...programmingTech];
 
   return (
