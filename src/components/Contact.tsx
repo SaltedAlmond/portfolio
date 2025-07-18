@@ -37,7 +37,7 @@ export default function Contact() {
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: "easeOut" }}
+        transition={{ duration: 2, ease: "easeOut" }}
         viewport={{ once: true, amount: 0.3 }}
       >
         <h2 className="text-3xl text-blue-100 font-bold mb-6">
@@ -47,7 +47,7 @@ export default function Contact() {
       <motion.div
         initial={{ opacity: 0, y: 100 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: "easeOut" }}
+        transition={{ duration: 2, ease: "easeOut" }}
         viewport={{ once: true, amount: 0.3 }}
       >
         <p className="text-white max-w-xl mb-12 px-4">

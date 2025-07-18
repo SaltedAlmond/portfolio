@@ -12,7 +12,7 @@ export default function About() {
           className="flex-1 flex flex-col md:pl-20 text-center md:text-left"
           initial={{ opacity: 0, x: -100 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, ease: "easeOut" }}
+          transition={{ duration: 2, ease: "easeOut" }}
         >
           <h1 className="bg-gradient-to-r from-blue-400 via-blue-300 to-blue-200 text-transparent bg-clip-text text-4xl font-bold mb-4">
             Hi, I&apos;m Ali Monette
@@ -47,7 +47,7 @@ export default function About() {
           className="flex-1 flex justify-center"
           initial={{ opacity: 0, x: 100 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, ease: "easeOut" }}
+          transition={{ duration: 2, ease: "easeOut" }}
         >
           <div className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 flex items-center justify-center">
             {/* Blue circle behind */}
@@ -69,23 +69,33 @@ export default function About() {
       </div>
 
       {/* Technologies Section */}
-      <div className="relative w-full text-center my-5">
+      <motion.div 
+        className="relative w-full text-center my-5"
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 2, ease: "easeOut" }}
+        >
         <div className="absolute inset-0 flex items-center" aria-hidden="true">
           <div className="w-full h-[3px] bg-gradient-to-r from-transparent via-blue-300 to-transparent" />
         </div>
         <h2 className="relative inline-block px-4 text-2xl text-blue-300 bg-[#0d121e]">
           Technologies
         </h2>
-      </div>
+      </motion.div>
       <motion.div
         className="text-center w-full"
         initial={{ opacity: 0, scale: 0 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1, ease: "easeOut" }}
+        transition={{ duration: 2, ease: "easeOut" }}
       >
         <Technologies />
       </motion.div>
-      <div className="w-full h-[3px] bg-gradient-to-r from-transparent via-blue-300 to-transparent" />
+      <motion.div 
+        className="w-full h-[3px] bg-gradient-to-r from-transparent via-blue-300 to-transparent" 
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 2, ease: "easeOut" }}
+        />
     </div>
   );
 }

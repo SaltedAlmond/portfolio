@@ -41,7 +41,7 @@ export default function Header() {
         className="flex items-center justify-between max-w-6xl w-full mx-auto gap-4"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: "easeOut" }}
+        transition={{ duration: 2, ease: "easeOut" }}
       >
         {/* Name/Profile Image container with transition */}
         {/* <div className="w-[150px] h-10 relative">

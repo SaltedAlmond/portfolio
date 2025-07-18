@@ -13,17 +13,18 @@ type Project = {
 
 const projects: Project[] = [
   {
-    name: "My Portfolio",
+    name: "My Portfolio (a.k.a. This Website)",
     image: "/images/portfolio.jpg",
     repo: "SaltedAlmond/portfolio",
-    description: "A portfolio site built with Next.js and Tailwind CSS",
-    live: null,
+    description:
+      "Built with Next.js and Tailwind CSS. You’re literally inside it right now.",
+    live: "/",
   },
   {
     name: "Worlds Apart",
     image: "/images/game.jpg",
     repo: "SaltedAlmond/WorldsApart",
-    description: "3D Adventure RPG in Unreal Engine with C++",
+    description: "3D Adventure RPG in Unreal Engine with C++. Still a work in progress — stay tuned!",
     live: null,
   },
 ];
@@ -33,11 +34,11 @@ type LanguageMap = Record<string, LanguageData>;
 
 export default function Projects() {
   const [languages, setLanguages] = useState<LanguageMap>({});
+  const [showTooltip, setShowTooltip] = useState(false);
 
   useEffect(() => {
     async function fetchLanguages() {
       const result: LanguageMap = {};
-
       for (const project of projects) {
         const res = await fetch(
           `https://api.github.com/repos/${project.repo}/languages`
@@ -45,10 +46,8 @@ export default function Projects() {
         const data = await res.json();
         result[project.repo] = data;
       }
-
       setLanguages(result);
     }
-
     fetchLanguages();
   }, []);
 
@@ -62,13 +61,13 @@ export default function Projects() {
 
   return (
     <section id="projects" className="w-full">
-      <h2 className="bg-black text-white text-3xl font-bold text-center mb-0 text-gray-900 dark:text-white py-10">
+      <h2 className="bg-black text-white text-3xl font-bold text-center mb-0 py-10">
         My Projects
       </h2>
 
       {projects.map((project, i) => (
         <div key={i} className="relative w-full h-[400px] overflow-hidden">
-          {/* Full-width background image */}
+          {/* Background image */}
           <Image
             src={project.image}
             alt={project.name}
@@ -100,7 +99,7 @@ export default function Projects() {
               </div>
 
               {/* Links */}
-              <div className="flex justify-center gap-4 text-sm font-semibold">
+              <div className="relative flex justify-center gap-4 text-sm font-semibold">
                 <a
                   href={`https://github.com/${project.repo}`}
                   target="_blank"
@@ -109,14 +108,29 @@ export default function Projects() {
                 >
                   GitHub
                 </a>
+
                 {project.live && (
                   <a
                     href={project.live}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="underline hover:text-blue-400"
+                    className="relative underline hover:text-blue-400"
+                    onClick={(e) => {
+                      // Only trigger tooltip for portfolio
+                      if (project.name.includes("Portfolio")) {
+                        e.preventDefault();
+                        setShowTooltip(true);
+                        setTimeout(() => setShowTooltip(false), 2500);
+                      }
+                    }}
                   >
-                    Live Demo
+                    Live
+                    {/* Tooltip */}
+                    {showTooltip && (
+                      <span className="absolute left-1/2 -translate-x-1/2 top-full mt-2 bg-white text-black text-xs rounded-md px-3 py-1 shadow-md z-10">
+                        Inception! You’re already here.
+                      </span>
+                    )}
                   </a>
                 )}
               </div>

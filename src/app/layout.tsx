@@ -1,8 +1,13 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ReactNode } from "react";
-
+import { Jura } from 'next/font/google';
 import { Open_Sans } from "next/font/google";
+
+const fontstyle = Jura({
+  weight: '400',
+  subsets: ['latin'],
+});
 
 const openSans = Open_Sans({
   subsets: ["latin"],
@@ -28,7 +33,7 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-   <html lang="en" className={openSans.className}>
+   <html lang="en" className={fontstyle.className}>
       <body>{children}</body>
     </html>
   );
