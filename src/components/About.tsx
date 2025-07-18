@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function About() {
   return (
-    <div className="bg-[#0d121e] min-h-[100svh] flex flex-col items-center justify-start pt-2 md:pt-1 -mt-10 px-4">
+    <div className="bg-[#0d121e] min-h-screen flex flex-col items-center justify-between pt-10 md:pt-24 px-4">
       {/* Top section: text + image side by side */}
       <div className="flex flex-col md:flex-row items-center justify-center w-full max-w-6xl gap-12 pt-16 md:pt-32 mb-8">
         {/* Left: About Me Text */}
@@ -67,14 +67,13 @@ export default function About() {
           </div>
         </motion.div>
       </div>
-
       {/* Technologies Section */}
-      <motion.div 
+      <motion.div
         className="relative w-full text-center my-5"
         initial={{ opacity: 0, scale: 0 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 2, ease: "easeOut" }}
-        >
+      >
         <div className="absolute inset-0 flex items-center" aria-hidden="true">
           <div className="w-full h-[3px] bg-gradient-to-r from-transparent via-blue-300 to-transparent" />
         </div>
@@ -90,12 +89,13 @@ export default function About() {
       >
         <Technologies />
       </motion.div>
-      <motion.div 
-        className="w-full h-[3px] bg-gradient-to-r from-transparent via-blue-300 to-transparent" 
+      <motion.div
+        className="w-full h-[3px] bg-gradient-to-r from-transparent via-blue-300 to-transparent"
         initial={{ opacity: 0, scale: 0 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 2, ease: "easeOut" }}
-        />
+      />
+      <div className="h-16 md:h-24"></div> {/* Spacer before Journey */}
     </div>
   );
 }

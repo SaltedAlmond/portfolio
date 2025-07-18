@@ -30,6 +30,16 @@ const experiences = [
   },
   {
     year: 2017,
+    title: "3D Artist",
+    company: "Canada Science and Technology Museums Corporation",
+    timeFrame: "April 2017 - May 2017",
+    type: "work",
+    description: [
+      "National Science & Innovation Gala VR Project. Full time volunteer for Unity VR project. 3D Modeller, Texture Artist, Animator, Sound Designer, Game Designer.",
+    ],
+  },
+  {
+    year: 2017,
     title: "3D Technical Artist",
     company: "Algonquin College of Applied Arts and Technology",
     timeFrame: "June 2017 – November 2017",
@@ -52,16 +62,6 @@ const experiences = [
         </a>
         .
       </>,
-    ],
-  },
-  {
-    year: 2017,
-    title: "3D Artist",
-    company: "Canada Science and Technology Museums Corporation",
-    timeFrame: "April 2017 - May 2017",
-    type: "work",
-    description: [
-      "National Science & Innovation Gala VR Project. Full time volunteer for Unity VR project. 3D Modeller, Texture Artist, Animator, Sound Designer, Game Designer.",
     ],
   },
   {
@@ -158,15 +158,22 @@ export default function Journey() {
     .sort((a, b) => a - b);
 
   return (
-    <section className="relative bg-[#161d2f] py-12 px-4">
+    <section className="relative bg-gradient-to-b from-[#0d121e] to-[#161d2f] py-12 px-4">
       <div className="relative w-full mx-auto">
-        <div className="absolute inset-0 top-0 border-3 border-blue-500 z-4 pointer-events-none mt-4" />
+        <div className="absolute inset-0 top-0  border-blue-400 z-4 pointer-events-none mt-4" />
         <div className="relative">
-          <h2 className="text-3xl font-bold relative text-center mb-6">
-            <span className="z-5 bg-[#161d2f] relative text-blue-400 px-3 py-1 rounded">
-              My Journey
-            </span>
-          </h2>
+          <motion.div
+            initial={{ opacity: 0, y: -100 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 2, ease: "easeOut" }}
+            viewport={{ once: true, amount: 0.3 }}
+          >
+            <h2 className="text-3xl font-bold relative text-center mb-6">
+              <span className="z-5 bg-[#0d121e] relative text-blue-400 px-3 py-1 rounded">
+                My Journey
+              </span>
+            </h2>
+          </motion.div>
           <div ref={containerRef} className="relative max-w-4xl mx-auto">
             <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-grey-500 via-blue-400 to-transparent h-full"></div>
             <motion.div
@@ -199,7 +206,7 @@ export default function Journey() {
                       transition={{ duration: 0.4 }}
                       className={`flex relative ${
                         isMobile
-                          ? "z-1 flex-col items-center text-center gap-2 py-6 bg-[#161d2f]"
+                          ? "z-1 flex-col items-center text-center gap-2 py-6 bg-[#161d2f]/80"
                           : "justify-between items-start py-8"
                       }`}
                     >

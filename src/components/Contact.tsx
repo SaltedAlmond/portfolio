@@ -32,7 +32,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="bg-[#0d121e] min-h-screen flex flex-col items-center justify-center px-4 py-12 text-center"
+      className="bg-gradient-to-b from-black to-[#0d121e] min-h-screen flex flex-col items-center justify-center px-4 py-12 text-center"
     >
       <motion.div
         initial={{ opacity: 0, y: 50 }}

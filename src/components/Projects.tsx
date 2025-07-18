@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 type Project = {
   name: string;
@@ -24,8 +25,17 @@ const projects: Project[] = [
     name: "Worlds Apart",
     image: "/images/game.jpg",
     repo: "SaltedAlmond/WorldsApart",
-    description: "3D Adventure RPG in Unreal Engine with C++. Still a work in progress — stay tuned!",
+    description:
+      "3D Adventure RPG in Unreal Engine with C++. Still a work in progress — stay tuned!",
     live: null,
+  },
+  {
+    name: "Portfolio 3D",
+    image: "/images/3dportfolio.png",
+    repo: "SaltedAlmond/Portfolio-3D",
+    description:
+      "Explore my custom-built 3D portfolio — a fully interactive scene showcasing my work in real-time 3D. All models and textures were created by me using 3ds Max, ZBrush, and Substance Painter, and the experience was programmed with Three.js and Vite. This is a work in progress — stay tuned for more updates!",
+    live: "https://amonette-3d.vercel.app",
   },
 ];
 
@@ -61,9 +71,18 @@ export default function Projects() {
 
   return (
     <section id="projects" className="w-full">
-      <h2 className="bg-black text-white text-3xl font-bold text-center mb-0 py-10">
-        My Projects
-      </h2>
+      <div className="bg-gradient-to-b from- bg-[#161d2f] to-black">
+        <motion.div
+          initial={{ opacity: 0, y: 100 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 2, ease: "easeOut" }}
+          viewport={{ once: true, amount: 0.3 }}
+        >
+          <h2 className="text-white text-3xl font-bold text-center mb-0 py-10">
+            My Projects
+          </h2>
+        </motion.div>
+      </div>
 
       {projects.map((project, i) => (
         <div key={i} className="relative w-full h-[400px] overflow-hidden">
@@ -78,7 +97,7 @@ export default function Projects() {
           />
 
           {/* Overlay */}
-          <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+          <div className="absolute inset-0 bg-gradient-to-b from-black via-black/30 to-black flex items-center justify-center">
             <div className="text-center px-4 max-w-3xl text-white">
               <h3 className="text-2xl font-bold mb-2">{project.name}</h3>
               <p className="mb-3 text-sm md:text-base">{project.description}</p>
@@ -116,21 +135,22 @@ export default function Projects() {
                     rel="noopener noreferrer"
                     className="relative underline hover:text-blue-400"
                     onClick={(e) => {
-                      // Only trigger tooltip for portfolio
-                      if (project.name.includes("Portfolio")) {
+                      if (
+                        project.name === "My Portfolio (a.k.a. This Website)"
+                      ) {
                         e.preventDefault();
                         setShowTooltip(true);
                         setTimeout(() => setShowTooltip(false), 2500);
                       }
                     }}
                   >
-                    Live
-                    {/* Tooltip */}
-                    {showTooltip && (
-                      <span className="absolute left-1/2 -translate-x-1/2 top-full mt-2 bg-white text-black text-xs rounded-md px-3 py-1 shadow-md z-10">
-                        Inception! You’re already here.
-                      </span>
-                    )}
+                    {project.name === "Portfolio 3D" ? "Demo" : "Live"}
+                    {showTooltip &&
+                      project.name === "My Portfolio (a.k.a. This Website)" && (
+                        <span className="absolute left-1/2 -translate-x-1/2 top-full mt-2 bg-white text-black text-xs rounded-md px-3 py-1 shadow-md z-10">
+                          Inception! You’re already here.
+                        </span>
+                      )}
                   </a>
                 )}
               </div>
