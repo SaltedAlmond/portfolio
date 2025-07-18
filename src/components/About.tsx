@@ -6,7 +6,7 @@ export default function About() {
   return (
     <div className="bg-[#0d121e] min-h-screen flex flex-col items-center justify-between pt-10 md:pt-1 xlg:pt-24 px-4">
       {/* Top section: text + image side by side */}
-      <div className="flex flex-col md:flex-row items-center justify-center w-full max-w-6xl gap-12 pt-16 md:pt-32 mb-8">
+      <div className="flex flex-col md:flex-row items-center justify-center w-full max-w-6xl gap-12 sm:pt-16 md:pt-20 mb-8">
         {/* Left: About Me Text */}
         <motion.div
           className="flex-1 flex flex-col md:pl-20 text-center md:text-left"
