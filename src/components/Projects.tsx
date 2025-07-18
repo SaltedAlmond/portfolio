@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import Image from 'next/image';
+import { useEffect, useState } from "react";
+import Image from "next/image";
 
 type Project = {
   name: string;
@@ -39,7 +39,9 @@ export default function Projects() {
       const result: LanguageMap = {};
 
       for (const project of projects) {
-        const res = await fetch(`https://api.github.com/repos/${project.repo}/languages`);
+        const res = await fetch(
+          `https://api.github.com/repos/${project.repo}/languages`
+        );
         const data = await res.json();
         result[project.repo] = data;
       }
@@ -85,14 +87,16 @@ export default function Projects() {
               {/* Language Percentages */}
               <div className="flex flex-wrap gap-2 justify-center text-sm font-medium mb-3">
                 {languages[project.repo] &&
-                  getPercentages(languages[project.repo]).map(({ lang, percent }) => (
-                    <span
-                      key={lang}
-                      className="bg-white/20 px-2 py-1 rounded-full backdrop-blur-sm"
-                    >
-                      {lang} ({percent}%)
-                    </span>
-                  ))}
+                  getPercentages(languages[project.repo]).map(
+                    ({ lang, percent }) => (
+                      <span
+                        key={lang}
+                        className="bg-white/20 px-2 py-1 rounded-full backdrop-blur-sm"
+                      >
+                        {lang} ({percent}%)
+                      </span>
+                    )
+                  )}
               </div>
 
               {/* Links */}
