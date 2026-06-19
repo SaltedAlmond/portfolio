@@ -1,89 +1,73 @@
 "use client";
-import { FaLinkedin, FaGithub } from "react-icons/fa";
-import { MdOutlineEmail } from "react-icons/md";
-import { TbFileCv } from "react-icons/tb";
-import { motion } from "framer-motion";
 
-const contactIcons = [
+import { motion } from "framer-motion";
+import { FaDownload, FaGithub, FaLinkedin } from "react-icons/fa";
+import { MdOutlineEmail } from "react-icons/md";
+
+const contactLinks = [
   {
-    icon: <FaLinkedin className="text-[2.75rem] text-white" />,
+    icon: FaLinkedin,
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/alimonette",
   },
   {
-    icon: <MdOutlineEmail className="text-[2.75rem] text-white" />,
+    icon: MdOutlineEmail,
     label: "Email",
     href: "mailto:amonette55@gmail.com",
   },
   {
-    icon: <FaGithub className="text-[2.75rem] text-white" />,
+    icon: FaGithub,
     label: "GitHub",
     href: "https://github.com/SaltedAlmond",
-  },
-  {
-    icon: <TbFileCv className="text-[2.75rem] text-white" />,
-    label: "Resume",
-    href: "/resume.pdf",
-    download: true,
   },
 ];
 
 export default function Contact() {
   return (
-    <section
-      id="contact"
-      className="bg-gradient-to-b from-black to-[#0d121e] min-h-screen flex flex-col items-center justify-center px-4 py-12 text-center"
-    >
+    <section id="contact" className="section-band px-4 py-20 sm:px-6 lg:py-28">
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
+        initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 2, ease: "easeOut" }}
         viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.55 }}
+        className="mx-auto max-w-6xl border-y border-theme py-14"
       >
-        <h2 className="text-3xl text-blue-100 font-bold mb-6">
-          Let&apos;s Connect
-        </h2>
-      </motion.div>
-      <motion.div
-        initial={{ opacity: 0, y: 100 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 2, ease: "easeOut" }}
-        viewport={{ once: true, amount: 0.3 }}
-      >
-        <p className="text-white max-w-xl mb-12 px-4">
-          Feel free to reach out or connect with me on LinkedIn or GitHub —
-          I&apos;m always open to emails! You can also download my resume below.
-        </p>
-      </motion.div>
+        <div className="grid items-end gap-10 lg:grid-cols-[1fr_auto]">
+          <div className="max-w-2xl">
+            <p className="eyebrow mb-3">Let&apos;s connect</p>
+            <h2 className="section-title">Have an interesting problem?</h2>
+            <p className="section-copy mt-4">
+              I&apos;m always happy to talk about software, developer tools,
+              teaching, game technology, or a project that needs a thoughtful
+              technical perspective.
+            </p>
+          </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 100 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: "easeOut" }}
-        viewport={{ once: true, amount: 0.3 }}
-      >
-        <div className="flex justify-center gap-6 flex-wrap">
-          {contactIcons.map((contact, i) => (
-            <a
-              key={i}
-              href={contact.href}
-              target={contact.href.startsWith("http") ? "_blank" : undefined}
-              rel={
-                contact.href.startsWith("http")
-                  ? "noopener noreferrer"
-                  : undefined
-              }
-              download={contact.download ? true : undefined}
-              className="flex flex-col items-center group transition-transform transform hover:scale-110 cursor-pointer"
-            >
-              {contact.icon}
-              <span className="mt-2 text-sm text-white opacity-0 group-hover:opacity-100 transition-opacity">
-                {contact.label}
-              </span>
+          <div className="flex flex-wrap items-center gap-3">
+            {contactLinks.map(({ icon: Icon, label, href }) => (
+              <a
+                key={label}
+                href={href}
+                target={href.startsWith("http") ? "_blank" : undefined}
+                rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                className="secondary-link"
+              >
+                <Icon aria-hidden="true" />
+                {label}
+              </a>
+            ))}
+            <a href="/resume.pdf" download className="primary-link">
+              <FaDownload aria-hidden="true" />
+              Resume
             </a>
-          ))}
+          </div>
         </div>
       </motion.div>
+
+      <footer className="text-muted mx-auto flex max-w-6xl flex-col gap-2 pt-8 text-sm sm:flex-row sm:items-center sm:justify-between">
+        <p>Ali Monette · Ottawa, Canada</p>
+        <p>Built with Next.js and curiosity.</p>
+      </footer>
     </section>
   );
 }

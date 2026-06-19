@@ -1,130 +1,114 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
 import { motion } from "framer-motion";
-// import Image from 'next/image';
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import {
+  FaCogs,
+  FaEnvelope,
+  FaFolderOpen,
+  FaMoon,
+  FaRoad,
+  FaSun,
+  FaUser,
+} from "react-icons/fa";
 
 const sections = [
-  { href: "#about", label: "About" },
-  { href: "#journey", label: "Journey" },
-  { href: "#projects", label: "Projects" },
-  { href: "#contact", label: "Contact" },
+  { href: "#about", label: "About", icon: FaUser },
+  { href: "#capabilities", label: "Capabilities", icon: FaCogs },
+  { href: "#journey", label: "Journey", icon: FaRoad },
+  { href: "#projects", label: "Projects", icon: FaFolderOpen },
+  { href: "#contact", label: "Contact", icon: FaEnvelope },
 ];
 
+type Theme = "dark" | "light";
+
 export default function Header() {
-  const [activeSection, setActiveSection] = useState<string>("about");
+  const [activeSection, setActiveSection] = useState("about");
+  const [theme, setTheme] = useState<Theme>("dark");
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY + 100;
-      for (const { href } of sections) {
-        const section = document.querySelector(href);
-        if (section) {
-          const top = section.getBoundingClientRect().top + window.scrollY;
-          if (scrollPosition >= top) {
-            setActiveSection(href.substring(1));
-          }
+    const currentTheme =
+      document.documentElement.dataset.theme === "light" ? "light" : "dark";
+    setTheme(currentTheme);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (visible) {
+          setActiveSection(visible.target.id);
         }
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+      },
+      { rootMargin: "-30% 0px -55% 0px", threshold: [0, 0.15, 0.4] }
+    );
+
+    sections.forEach(({ href }) => {
+      const section = document.querySelector(href);
+      if (section) observer.observe(section);
+    });
+
+    return () => observer.disconnect();
   }, []);
 
-  const isAboutSection = activeSection === "about";
+  const toggleTheme = () => {
+    const nextTheme: Theme = theme === "dark" ? "light" : "dark";
+    document.documentElement.dataset.theme = nextTheme;
+    localStorage.setItem("portfolio-theme", nextTheme);
+    setTheme(nextTheme);
+  };
 
   return (
-    <header className="bg-[#0d121e] sticky top-0 z-50 p-4">
-      <motion.div
-        className="flex items-center justify-between max-w-6xl w-full mx-auto gap-4"
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 2, ease: "easeOut" }}
-      >
-        {/* Name/Profile Image container with transition */}
-        {/* <div className="w-[150px] h-10 relative">
-            <p
-              className={`absolute inset-0 text-2xl font-bold whitespace-nowrap flex items-center transition-opacity duration-500 bg-gradient-to-b from-blue-600 via-blue-400 to-blue-200 bg-clip-text text-transparent ${
-                isAboutSection ? 'opacity-100' : 'opacity-0'
-              }`}
-            >
-              Ali Monette
-            </p>
-          <div
-            className={`absolute justify-end inset-0 flex items-center transition-opacity duration-500 ${
-              isAboutSection ? 'opacity-0' : 'opacity-100'
-            }`}
-          >
-            <div className="w-12 h-12 rounded-full border-2 border-blue-300 flex items-center justify-center">
-            <Image
-              src="/images/Ali-Chill.png"
-              alt="Ali Monette"
-              width={36}
-              height={36}
-              className="rounded-full object-cover"
-              priority
-            />
-            </div>
-          </div>
-        </div> */}
+    <motion.header
+      initial={{ opacity: 0, y: -12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.45, ease: "easeOut" }}
+      className="site-header sticky top-0 z-50"
+    >
+      <div className="mx-auto flex h-16 w-full min-w-0 max-w-6xl items-center gap-2 px-4 sm:gap-3 sm:px-6">
+        <Link
+          href="#about"
+          className="text-main mr-auto whitespace-nowrap text-base font-bold sm:text-lg"
+          aria-label="Back to top"
+        >
+          AM<span className="text-accent">.</span>
+        </Link>
 
-        {/* Navigation + Progress Meter with Aligned Dots */}
-        <div className="flex flex-col flex-grow">
-          {/* Grid-based nav bar */}
-          <div className="grid grid-cols-4 gap-4 mb-1">
-            {sections.map(({ href, label }) => (
-              <Link
-                key={href}
-                href={href}
-                className={`text-center text-sm ${
-                  activeSection === href.substring(1)
-                    ? "text-blue-400 font-bold"
-                    : "text-gray-400"
-                }`}
-              >
-                {label}
-              </Link>
-            ))}
-          </div>
-
-          {/* Aligned progress bar within dot bounds */}
-          <div className="relative w-full h-3">
-            {/* The meter range (from first dot to last) */}
-            <div className="absolute left-[12.5%] right-[12.5%] top-1/2 h-1 bg-gray-700 rounded-full -translate-y-1/2" />
-
-            {/* Blue fill, based on active section */}
-            <div
-              className="absolute left-[12.5%] top-1/2 h-1 bg-gradient-to-r from-blue-100 via-blue-300 to-blue-600 rounded-full transition-all duration-500 -translate-y-1/2"
-              style={{
-                width: `${
-                  (sections.findIndex(
-                    (s) => s.href.substring(1) === activeSection
-                  ) /
-                    (sections.length - 1)) *
-                  75
-                }%`, // 75% is the space between first and last dots
-              }}
-            />
-
-            {/* Dots */}
-            <div className="absolute top-1/2 w-full grid grid-cols-4 -translate-y-1/2">
-              {sections.map(({ href }) => (
-                <div key={href} className="flex justify-center">
-                  <div
-                    className={`w-3 h-3 rounded-full border-2 border-[#0d121e] transition-colors duration-300 ${
-                      activeSection === href.substring(1)
-                        ? "scale-130 bg-blue-300"
-                        : "scale-70 bg-gray-700"
+        <nav aria-label="Portfolio sections" className="min-w-0 flex-1">
+          <ul className="flex min-w-0 items-center justify-end sm:gap-2">
+            {sections.map(({ href, label, icon: Icon }) => {
+              const isActive = activeSection === href.slice(1);
+              return (
+                <li key={href}>
+                  <Link
+                    href={href}
+                    aria-current={isActive ? "page" : undefined}
+                    className={`block rounded px-1.5 py-2 text-xs font-semibold transition-colors sm:px-3 sm:text-sm ${
+                      isActive ? "text-accent" : "text-muted hover:text-main"
                     }`}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </motion.div>
-    </header>
+                    title={label}
+                  >
+                    <span className="hidden md:inline">{label}</span>
+                    <Icon className="md:hidden" aria-hidden="true" />
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+
+        <button
+          type="button"
+          className="theme-button"
+          onClick={toggleTheme}
+          aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+          title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+        >
+          {theme === "dark" ? <FaSun /> : <FaMoon />}
+        </button>
+      </div>
+    </motion.header>
   );
 }

@@ -1,126 +1,49 @@
 "use client";
 
-import { JSX } from "react";
-import {
-  FaNodeJs,
-  FaJsSquare,
-  FaReact,
-  FaDocker,
-  FaHtml5,
-  FaCss3Alt,
-  FaGithub,
-} from "react-icons/fa";
-import { SiUnrealengine, SiNextdotjs, SiTypescript } from "react-icons/si";
-import { DiVisualstudio, DiBackbone } from "react-icons/di";
-import { PiFileCpp } from "react-icons/pi";
-import { ReactElement } from "react";
+import { motion } from "framer-motion";
 
-type TechItem = {
-  icon: ReactElement;
-  label: string;
-};
-
-const programmingTech: TechItem[] = [
-  { icon: <FaHtml5 className="text-[2.75rem] text-red-400" />, label: "HTML5" },
+const groups = [
   {
-    icon: <FaCss3Alt className="text-[2.75rem] text-blue-400" />,
-    label: "CSS3",
+    title: "Application",
+    items: ["TypeScript", "JavaScript", "React", "Next.js", "Node.js", "REST APIs"],
   },
   {
-    icon: <FaJsSquare className="text-[2.75rem] text-yellow-400" />,
-    label: "JavaScript",
+    title: "Automation & delivery",
+    items: ["Python", "Java", "Jenkins", "Docker", "Linux", "CI/CD"],
   },
   {
-    icon: <SiTypescript className="text-[2.75rem] text-sky-400" />,
-    label: "TypeScript",
+    title: "Data & infrastructure",
+    items: ["SQL", "PostgreSQL", "Redis", "RabbitMQ", "LDAP", "Nginx"],
   },
   {
-    icon: <FaReact className="text-[2.75rem] text-cyan-300" />,
-    label: "React",
-  },
-  {
-    icon: <SiNextdotjs className="text-[2.75rem] text-neutral-300" />,
-    label: "Next.js",
-  },
-  {
-    icon: <DiBackbone className="text-[3rem] text-indigo-400" />,
-    label: "Backbone.js",
-  },
-  {
-    icon: <FaNodeJs className="text-[2.75rem] text-green-400" />,
-    label: "Node.js",
-  },
-  {
-    icon: <FaDocker className="text-[2.75rem] text-blue-400" />,
-    label: "Docker",
-  },
-  {
-    icon: <FaGithub className="text-[2.75rem] text-zinc-300" />,
-    label: "GitHub",
-  },
-  {
-    icon: <DiVisualstudio className="text-[3rem] text-purple-400" />,
-    label: "Visual Studio",
-  },
-  {
-    icon: <PiFileCpp className="text-[2.75rem] text-blue-500" />,
-    label: "C++",
-  },
-  {
-    icon: <SiUnrealengine className="text-[2.75rem] text-white" />,
-    label: "Unreal Engine",
+    title: "Game & 3D",
+    items: ["C++", "C#", "Unreal Engine", "Unity", "Three.js", "3ds Max"],
   },
 ];
 
-export default function Technologies(): JSX.Element {
-  // Merge: Repeat technologies to have a seamless loop
-  const repeatedTech = [
-    ...programmingTech,
-    ...programmingTech,
-    ...programmingTech,
-  ];
-
+export default function Technologies() {
   return (
-    <div className="marquee-track">
-      <div className="marquee-content flex flex-row whitespace-nowrap">
-        {repeatedTech.map((tech, i) => (
-          <div
-            key={i}
-            className="flex flex-col items-center min-w-[80px] mx-6 group cursor-pointer"
+    <div className="mt-14 border-t border-theme pt-10">
+      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        {groups.map((group, index) => (
+          <motion.div
+            key={group.title}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.45, delay: index * 0.06 }}
           >
-            {tech.icon}
-            <span className="text-blue-100 mt-2 text-sm opacity-0 group-hover:opacity-100 transition-opacity">
-              {tech.label}
-            </span>
-          </div>
+            <h3 className="text-secondary text-sm font-bold">{group.title}</h3>
+            <ul className="mt-4 flex flex-wrap gap-2">
+              {group.items.map((item) => (
+                <li key={item} className="skill-chip px-3 py-1.5 text-sm">
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </motion.div>
         ))}
       </div>
-
-      <style jsx>{`
-        .marquee-track {
-          position: relative;
-          width: 100%;
-          overflow: hidden;
-          margin-left: -1rem;
-          margin-right: -1rem;
-          width: calc(100% + 2rem);
-        }
-
-        .marquee-content {
-          display: flex;
-          width: max-content;
-          animation: scroll 40s linear infinite;
-        }
-
-        @keyframes scroll {
-          0% {
-            transform: translateX(0%);
-          }
-          100% {
-            transform: translateX(-33.333%);
-          }
-        }
-      `}</style>
     </div>
   );
 }

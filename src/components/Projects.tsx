@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Image from "next/image";
 import { motion } from "framer-motion";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { FaArrowUpRightFromSquare, FaGithub } from "react-icons/fa6";
 
 type Project = {
   name: string;
@@ -10,154 +11,188 @@ type Project = {
   repo: string;
   description: string;
   live: string | null;
+  label: string;
 };
 
 const projects: Project[] = [
   {
-    name: "My Portfolio (a.k.a. This Website)",
-    image: "/images/portfolio.jpg",
-    repo: "SaltedAlmond/portfolio",
+    name: "Portfolio 3D",
+    image: "/images/3dportfolio.png",
+    repo: "SaltedAlmond/Portfolio-3D",
     description:
-      "Built with Next.js and Tailwind CSS. You’re literally inside it right now.",
-    live: "/",
+      "An interactive real-time 3D portfolio built with Three.js and Vite, featuring original models and textures created in 3ds Max, ZBrush, and Substance Painter.",
+    live: "https://amonette-3d.vercel.app",
+    label: "Featured interactive project",
   },
   {
     name: "Worlds Apart",
     image: "/images/game.jpg",
     repo: "SaltedAlmond/WorldsApart",
     description:
-      "3D Adventure RPG in Unreal Engine with C++. Still a work in progress — stay tuned!",
+      "A work-in-progress 3D adventure RPG built in Unreal Engine and C++, combining gameplay programming with environment and asset development.",
     live: null,
+    label: "Game development",
   },
   {
-    name: "Portfolio 3D",
-    image: "/images/3dportfolio.png",
-    repo: "SaltedAlmond/Portfolio-3D",
+    name: "Ali Monette Portfolio",
+    image: "/images/portfolio.jpg",
+    repo: "SaltedAlmond/portfolio",
     description:
-      "Explore my custom-built 3D portfolio — a fully interactive scene showcasing my work in real-time 3D. All models and textures were created by me using 3ds Max, ZBrush, and Substance Painter, and the experience was programmed with Three.js and Vite. This is a work in progress — stay tuned for more updates!",
-    live: "https://amonette-3d.vercel.app",
+      "This responsive portfolio, built with Next.js, TypeScript, Tailwind CSS, and Framer Motion to bring my engineering and creative work into one place.",
+    live: "#about",
+    label: "Web development",
   },
 ];
 
 type LanguageData = Record<string, number>;
 type LanguageMap = Record<string, LanguageData>;
 
+function getTopLanguages(languageData: LanguageData) {
+  const total = Object.values(languageData).reduce(
+    (sum, value) => sum + value,
+    0
+  );
+
+  if (!total) return [];
+
+  return Object.entries(languageData)
+    .map(([language, bytes]) => ({
+      language,
+      percentage: (bytes / total) * 100,
+    }))
+    .sort((a, b) => b.percentage - a.percentage)
+    .slice(0, 4);
+}
+
 export default function Projects() {
   const [languages, setLanguages] = useState<LanguageMap>({});
-  const [showTooltip, setShowTooltip] = useState(false);
 
   useEffect(() => {
+    const controller = new AbortController();
+
     async function fetchLanguages() {
-      const result: LanguageMap = {};
-      for (const project of projects) {
-        const res = await fetch(
-          `https://api.github.com/repos/${project.repo}/languages`
-        );
-        const data = await res.json();
-        result[project.repo] = data;
+      const entries = await Promise.all(
+        projects.map(async (project) => {
+          try {
+            const response = await fetch(
+              `https://api.github.com/repos/${project.repo}/languages`,
+              { signal: controller.signal }
+            );
+            if (!response.ok) return [project.repo, {}] as const;
+            return [project.repo, (await response.json()) as LanguageData] as const;
+          } catch {
+            return [project.repo, {}] as const;
+          }
+        })
+      );
+
+      if (!controller.signal.aborted) {
+        setLanguages(Object.fromEntries(entries));
       }
-      setLanguages(result);
     }
+
     fetchLanguages();
+    return () => controller.abort();
   }, []);
 
-  const getPercentages = (langData: LanguageData) => {
-    const total = Object.values(langData).reduce((sum, val) => sum + val, 0);
-    return Object.entries(langData).map(([lang, bytes]) => ({
-      lang,
-      percent: ((bytes / total) * 100).toFixed(1),
-    }));
-  };
-
   return (
-    <section id="projects" className="w-full">
-      <div className="bg-gradient-to-b from- bg-[#161d2f] to-black">
+    <section id="projects" className="section-band-alt px-4 py-20 sm:px-6">
+      <div className="mx-auto max-w-6xl">
         <motion.div
-          initial={{ opacity: 0, y: 100 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 2, ease: "easeOut" }}
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.55, ease: "easeOut" }}
+          className="max-w-2xl"
         >
-          <h2 className="text-white text-3xl font-bold text-center mb-0 py-10">
-            My Projects
-          </h2>
+          <p className="eyebrow mb-3">Selected work</p>
+          <h2 className="section-title">Projects with personality.</h2>
+          <p className="section-copy mt-4">
+            A mix of web development, real-time 3D, game technology, and the
+            spaces where those disciplines meet.
+          </p>
         </motion.div>
-      </div>
 
-      {projects.map((project, i) => (
-        <div key={i} className="relative w-full h-[400px] overflow-hidden">
-          {/* Background image */}
-          <Image
-            src={project.image}
-            alt={project.name}
-            fill
-            className="object-cover"
-            quality={80}
-            priority
-          />
+        <div className="mt-10 grid gap-6 lg:grid-cols-3">
+          {projects.map((project, index) => {
+            const projectLanguages = getTopLanguages(
+              languages[project.repo] ?? {}
+            );
 
-          {/* Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black via-black/30 to-black flex items-center justify-center">
-            <div className="text-center px-4 max-w-3xl text-white">
-              <h3 className="text-2xl font-bold mb-2">{project.name}</h3>
-              <p className="mb-3 text-sm md:text-base">{project.description}</p>
+            return (
+              <motion.article
+                key={project.name}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: index * 0.08 }}
+                className="project-card overflow-hidden rounded-[8px]"
+              >
+                <div className="relative aspect-[16/10] overflow-hidden">
+                  <Image
+                    src={project.image}
+                    alt=""
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 33vw"
+                    className="object-cover"
+                  />
+                  <div className="project-overlay absolute inset-0" />
+                  <p className="absolute bottom-4 left-4 text-xs font-bold uppercase text-white">
+                    {project.label}
+                  </p>
+                </div>
 
-              {/* Language Percentages */}
-              <div className="flex flex-wrap gap-2 justify-center text-sm font-medium mb-3">
-                {languages[project.repo] &&
-                  getPercentages(languages[project.repo]).map(
-                    ({ lang, percent }) => (
-                      <span
-                        key={lang}
-                        className="bg-white/20 px-2 py-1 rounded-full backdrop-blur-sm"
-                      >
-                        {lang} ({percent}%)
-                      </span>
-                    )
-                  )}
-              </div>
+                <div className="flex min-h-[300px] flex-col p-6">
+                  <h3 className="text-main text-2xl font-bold">{project.name}</h3>
+                  <p className="text-muted mt-3 leading-7">
+                    {project.description}
+                  </p>
 
-              {/* Links */}
-              <div className="relative flex justify-center gap-4 text-sm font-semibold">
-                <a
-                  href={`https://github.com/${project.repo}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline hover:text-blue-400"
-                >
-                  GitHub
-                </a>
-
-                {project.live && (
-                  <a
-                    href={project.live}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="relative underline hover:text-blue-400"
-                    onClick={(e) => {
-                      if (
-                        project.name === "My Portfolio (a.k.a. This Website)"
-                      ) {
-                        e.preventDefault();
-                        setShowTooltip(true);
-                        setTimeout(() => setShowTooltip(false), 2500);
-                      }
-                    }}
-                  >
-                    {project.name === "Portfolio 3D" ? "Demo" : "Live"}
-                    {showTooltip &&
-                      project.name === "My Portfolio (a.k.a. This Website)" && (
-                        <span className="absolute left-1/2 -translate-x-1/2 top-full mt-2 bg-white text-black text-xs rounded-md px-3 py-1 shadow-md z-10">
-                          Inception! You’re already here.
+                  {projectLanguages.length > 0 && (
+                    <div className="mt-5 flex flex-wrap gap-2">
+                      {projectLanguages.map(({ language, percentage }) => (
+                        <span
+                          key={language}
+                          className="skill-chip px-2.5 py-1 text-xs"
+                        >
+                          {language} {percentage.toFixed(0)}%
                         </span>
-                      )}
-                  </a>
-                )}
-              </div>
-            </div>
-          </div>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="mt-auto flex gap-3 pt-6">
+                    <a
+                      href={`https://github.com/${project.repo}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="secondary-link flex-1"
+                    >
+                      <FaGithub aria-hidden="true" />
+                      Code
+                    </a>
+                    {project.live && (
+                      <a
+                        href={project.live}
+                        target={project.live.startsWith("http") ? "_blank" : undefined}
+                        rel={
+                          project.live.startsWith("http")
+                            ? "noopener noreferrer"
+                            : undefined
+                        }
+                        className="primary-link flex-1"
+                      >
+                        View
+                        <FaArrowUpRightFromSquare aria-hidden="true" />
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </motion.article>
+            );
+          })}
         </div>
-      ))}
+      </div>
     </section>
   );
 }

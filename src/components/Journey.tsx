@@ -1,12 +1,26 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-// Journey.tsx
 "use client";
 
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
+import type { ReactNode } from "react";
+import { useRef } from "react";
 import { FaBriefcase, FaGraduationCap } from "react-icons/fa";
-import { useState, useEffect, useRef } from "react";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
 
-const experiences = [
+type Experience = {
+  year: number;
+  title: string;
+  company: string;
+  timeFrame: string;
+  type: "work" | "education";
+  description: ReactNode[];
+  side?: "left" | "right";
+};
+
+const experiences: Experience[] = [
   {
     year: 2017,
     title: "Game Development",
@@ -15,16 +29,16 @@ const experiences = [
     type: "education",
     description: [
       <>
-        Successfully graduated from the{" "}
+        Graduated from the{" "}
         <a
           href="https://www.algonquincollege.com/mediaanddesign/program/game-development/"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-blue-400 underline"
+          className="text-accent underline"
         >
           Game Development
         </a>{" "}
-        Program!
+        program.
       </>,
     ],
   },
@@ -35,63 +49,29 @@ const experiences = [
     timeFrame: "April 2017 - May 2017",
     type: "work",
     description: [
-      "National Science & Innovation Gala VR Project. Full time volunteer for Unity VR project. 3D Modeller, Texture Artist, Animator, Sound Designer, Game Designer.",
+      "Contributed 3D modeling, texturing, animation, sound, and game design to a Unity VR experience for the National Science & Innovation Gala.",
     ],
   },
   {
     year: 2017,
     title: "3D Technical Artist",
-    company: "Algonquin College of Applied Arts and Technology",
-    timeFrame: "June 2017 – November 2017",
+    company: "Algonquin College",
+    timeFrame: "June 2017 - November 2017",
     type: "work",
     description: [
       <>
-        Full-time contract for a Unity VR project to recreate the DARE District
-        at Algonquin College in virtual reality. Contributed as a{" "}
-        <span className="italic">
-          3D Modeller, Texture Artist, and Lighting Artist
-        </span>
-        .{" "}
+        Helped recreate Algonquin College&apos;s DARE District in Unity VR,
+        contributing modeling, textures, and lighting.{" "}
         <a
           href="https://www.youtube.com/watch?v=Uis4SCYNjrM&list=WL"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-blue-400 underline"
+          className="text-accent underline"
         >
-          Watch a video tour
+          Watch the tour
         </a>
         .
       </>,
-    ],
-  },
-  {
-    year: 2023,
-    title: "Software Developer - Upgrade",
-    company: "Case IQ",
-    timeFrame: "September 2023 - April 2025",
-    type: "work",
-    description: [
-      "Rejoined Case IQ to upgrade legacy client web applications, improving performance and maintainability.",
-    ],
-  },
-  {
-    year: 2023,
-    title: "Part-time Professor",
-    company: "Algonquin College",
-    timeFrame: "September 2023 - Present",
-    type: "work",
-    description: [
-      "Instruct game development courses covering both programming and art disciplines. Taught foundational math and C++ programming for 2D and 3D Unreal Engine games, emphasizing Agile workflows and team collaboration tools like JIRA and GitHub. Also led advanced game asset creation classes, coaching students in industry-standard tools such as 3D Studio Max, ZBrush, and Substance Painter to develop professional-level modeling and texturing skills.",
-    ],
-  },
-  {
-    year: 2022,
-    title: "Software Developer - Delivery",
-    company: "Case IQ",
-    timeFrame: "January 2022 - March 2023",
-    type: "work",
-    description: [
-      "Hired as a Software Application Developer at Case IQ following my internship, focused on implementing custom features for client web applications.",
     ],
   },
   {
@@ -101,213 +81,216 @@ const experiences = [
     timeFrame: "January 2020 - December 2021",
     type: "work",
     description: [
-      "Completed a Computer Engineering internship at Case IQ, where I was promoted to Quality Assurance Lead within the first month by demonstrating initiative and leadership.",
+      "Joined Case IQ through a Computer Engineering internship and was promoted to QA Lead within the first month after demonstrating initiative and strong issue detection.",
     ],
   },
   {
     year: 2021,
     title: "Computer Engineering",
     company: "Algonquin College, Ottawa, Ontario",
-    type: "education",
     timeFrame: "September 2018 - December 2021",
+    type: "education",
     description: [
       <>
-        Successfully graduated from the{" "}
+        Graduated with honours from the{" "}
         <a
           href="https://www.algonquincollege.com/sat/program/computer-engineering-technology-computing-science/"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-blue-400 underline"
+          className="text-accent underline"
         >
           Computer Engineering Technology
         </a>{" "}
-        program!
+        program.
       </>,
+    ],
+  },
+  {
+    year: 2022,
+    title: "Software Developer - Delivery",
+    company: "Case IQ",
+    timeFrame: "January 2022 - March 2023",
+    type: "work",
+    description: [
+      "Moved into software development after the internship, implementing custom features and integrations for client web applications.",
+    ],
+  },
+  {
+    year: 2023,
+    title: "Software Developer - Upgrade",
+    company: "Case IQ",
+    timeFrame: "September 2023 - March 2025",
+    type: "work",
+    description: [
+      "Rejoined Case IQ to modernize and upgrade legacy client applications while improving performance, reliability, and maintainability.",
+    ],
+  },
+  {
+    year: 2023,
+    title: "Part-time Professor",
+    company: "Algonquin College",
+    timeFrame: "September 2023 - Present",
+    type: "work",
+    description: [
+      "Teach programming, applied math, game development, and asset creation while helping students build practical skills with C++, Unreal Engine, GitHub, JIRA, 3ds Max, ZBrush, and Substance Painter.",
+    ],
+  },
+  {
+    year: 2025,
+    title: "Tools Developer & Specialist",
+    company: "Ross Video",
+    timeFrame: "October 2025 - June 2026",
+    type: "work",
+    side: "left",
+    description: [
+      "Joined Ross Video to build internal developer and QA tooling across the full project lifecycle. Took solutions from architecture through implementation and deployment, spanning AI-assisted test analysis, documentation automation, security workflows, access control, CI/CD infrastructure, and enterprise integrations.",
     ],
   },
 ];
 
-function useIsMobile(threshold = 768) {
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const update = () => setIsMobile(window.innerWidth < threshold);
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, [threshold]);
-  return isMobile;
+function TimelineItem({
+  item,
+  titleOnLeft,
+}: {
+  item: Experience;
+  titleOnLeft: boolean;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  const opacity = useTransform(
+    scrollYProgress,
+    [0, 0.22, 0.5, 0.78, 1],
+    [0.3, 0.68, 1, 0.68, 0.3]
+  );
+  const y = useTransform(scrollYProgress, [0, 0.5, 1], [24, 0, -24]);
+  const scale = useTransform(
+    scrollYProgress,
+    [0, 0.5, 1],
+    [0.985, 1, 0.985]
+  );
+  const Icon = item.type === "education" ? FaGraduationCap : FaBriefcase;
+
+  const title = (
+    <div className={titleOnLeft ? "md:text-right" : "md:text-left"}>
+      <h3 className="text-accent text-xl font-bold sm:text-2xl">{item.title}</h3>
+      <p className="text-secondary mt-1 font-semibold">{item.company}</p>
+      <p className="text-muted mt-1 text-sm italic">{item.timeFrame}</p>
+    </div>
+  );
+
+  const description = (
+    <div
+      className={`text-muted leading-7 ${
+        titleOnLeft ? "md:text-left" : "md:text-right"
+      }`}
+    >
+      {item.description.map((line, index) => (
+        <p key={index}>{line}</p>
+      ))}
+    </div>
+  );
+
+  return (
+    <motion.div
+      ref={ref}
+      style={
+        reduceMotion
+          ? { opacity: 1 }
+          : { opacity, y, scale }
+      }
+      className="relative grid gap-4 py-8 md:grid-cols-[minmax(0,1fr)_48px_minmax(0,1fr)] md:items-start md:gap-6"
+    >
+      <div className="pl-14 md:hidden">{title}</div>
+
+      <div className="hidden md:block">{titleOnLeft ? title : description}</div>
+
+      <div className="absolute left-0 top-9 z-10 md:static md:flex md:justify-center">
+        <div className="timeline-marker flex h-10 w-10 items-center justify-center rounded-full text-base">
+          <Icon aria-hidden="true" />
+        </div>
+      </div>
+
+      <div className="hidden md:block">{titleOnLeft ? description : title}</div>
+
+      <div className="pl-14 md:hidden">{description}</div>
+    </motion.div>
+  );
 }
 
 export default function Journey() {
-  const isMobile = useIsMobile();
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start center", "end center"],
   });
   const scaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
-  const grouped = experiences.reduce((acc, exp) => {
-    acc[exp.year] = acc[exp.year] || [];
-    acc[exp.year].push(exp);
-    return acc;
-  }, {} as Record<number, typeof experiences>);
+  const grouped = experiences.reduce<Record<number, Experience[]>>(
+    (result, experience) => {
+      result[experience.year] ??= [];
+      result[experience.year].push(experience);
+      return result;
+    },
+    {}
+  );
 
-  const sortedYears = Object.keys(grouped)
+  const years = Object.keys(grouped)
     .map(Number)
     .sort((a, b) => a - b);
 
+  let itemIndex = 0;
+
   return (
-    <section className="relative bg-gradient-to-b from-[#0d121e] to-[#161d2f] py-12 px-4">
-      <div className="relative w-full mx-auto">
-        <div className="absolute inset-0 top-0  border-blue-400 z-4 pointer-events-none mt-4" />
-        <div className="relative">
+    <section id="journey" className="section-band px-4 py-20 sm:px-6">
+      <div className="mx-auto max-w-6xl">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.55, ease: "easeOut" }}
+          className="mx-auto max-w-2xl text-center"
+        >
+          <p className="eyebrow mb-3">The path here</p>
+          <h2 className="section-title">My journey</h2>
+          <p className="section-copy mt-4">
+            A career shaped by creative technology, software engineering,
+            teaching, and the tools that connect them.
+          </p>
+        </motion.div>
+
+        <div ref={containerRef} className="relative mx-auto mt-14 max-w-5xl">
+          <div className="timeline-line absolute bottom-0 left-5 top-0 w-px md:left-1/2 md:-translate-x-1/2" />
           <motion.div
-            initial={{ opacity: 0, y: -100 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 2, ease: "easeOut" }}
-            viewport={{ once: true, amount: 0.3 }}
-          >
-            <h2 className="text-3xl font-bold relative text-center mb-6">
-              <span className="z-5 bg-[#0d121e] relative text-blue-400 px-3 py-1 rounded">
-                My Journey
-              </span>
-            </h2>
-          </motion.div>
-          <div ref={containerRef} className="relative max-w-4xl mx-auto">
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-grey-500 via-blue-400 to-transparent h-full"></div>
-            <motion.div
-              className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-blue-400 origin-top"
-              style={{ scaleY }}
-            />
+            className="timeline-progress absolute bottom-0 left-5 top-0 w-px origin-top md:left-1/2 md:-translate-x-1/2"
+            style={{ scaleY }}
+          />
 
-            {sortedYears.map((year, yearIndex) => (
-              <div key={year} className="mb-8 relative">
-                <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-6 text-white text-sm font-medium bg-[#161d2f] rounded-full">
-                  {year}
-                </div>
-
-                {grouped[year].map((item, itemIndex) => {
-                  const isLeft = (yearIndex + itemIndex) % 2 === 0;
-                  const Icon =
-                    item.type === "education" ? FaGraduationCap : FaBriefcase;
-                  const ref = useRef(null);
-                  const isInView = useInView(ref, {
-                    margin: "-40% 0px -40% 0px",
-                    once: false,
-                  });
-
-                  return (
-                    <motion.div
-                      key={itemIndex}
-                      ref={ref}
-                      initial={{ scale: 0.95, opacity: 0 }}
-                      animate={isInView ? { scale: 1, opacity: 1 } : {}}
-                      transition={{ duration: 0.4 }}
-                      className={`flex relative ${
-                        isMobile
-                          ? "z-1 flex-col items-center text-center gap-2 py-6 bg-[#161d2f]/80"
-                          : "justify-between items-start py-8"
-                      }`}
-                    >
-                      {isMobile ? (
-                        <>
-                          <motion.div
-                            className="z-2 bg-blue-400 border-2 border-[#161d2f] rounded-full w-10 h-10 flex items-center justify-center text-white text-md"
-                            initial={{ scale: 0.8 }}
-                            animate={isInView ? { scale: 1.15 } : {}}
-                            transition={{
-                              type: "spring",
-                              stiffness: 260,
-                              damping: 20,
-                            }}
-                          >
-                            <Icon />
-                          </motion.div>
-                          <motion.h3 className="text-blue-300 text-lg font-bold">
-                            {item.title}
-                          </motion.h3>
-                          <motion.p className="text-orange-300 text-sm">
-                            {item.company}
-                          </motion.p>
-                          <motion.p className="text-orange-300 text-sm">
-                            {item.timeFrame}
-                          </motion.p>
-                          <motion.div className="text-blue-200 text-sm">
-                            {item.description.map((line, idx) => (
-                              <p key={idx}>{line}</p>
-                            ))}
-                          </motion.div>
-                        </>
-                      ) : isLeft ? (
-                        <>
-                          <motion.div className="w-[45%] text-right pr-6">
-                            <h3 className="text-blue-300 text-lg font-bold md:text-lg">
-                              {item.title}
-                            </h3>
-                            <p className="text-orange-300 text-sm">
-                              {item.company}
-                            </p>
-                            <p className="text-orange-200 italic text-xs">
-                              {item.timeFrame}
-                            </p>
-                          </motion.div>
-                          <motion.div
-                            className="relative z-2 bg-blue-400 border-2 border-[#161d2f] rounded-full w-9 h-9 flex items-center justify-center text-white text-md my-2"
-                            initial={{ scale: 0.8 }}
-                            animate={isInView ? { scale: 1.15 } : {}}
-                            transition={{
-                              type: "spring",
-                              stiffness: 260,
-                              damping: 20,
-                            }}
-                          >
-                            <Icon />
-                          </motion.div>
-                          <motion.div className="w-[45%] text-left pl-6 text-blue-200 text-sm">
-                            {item.description.map((line, idx) => (
-                              <p key={idx}>{line}</p>
-                            ))}
-                          </motion.div>
-                        </>
-                      ) : (
-                        <>
-                          <motion.div className="w-[45%] text-right pr-6 text-blue-200 text-sm">
-                            {item.description.map((line, idx) => (
-                              <p key={idx}>{line}</p>
-                            ))}
-                          </motion.div>
-                          <motion.div
-                            className="relative z-2 bg-blue-400 border-2 border-[#161d2f] rounded-full w-9 h-9 flex items-center justify-center text-white text-md my-2"
-                            initial={{ scale: 0.8 }}
-                            animate={isInView ? { scale: 1.15 } : {}}
-                            transition={{
-                              type: "spring",
-                              stiffness: 260,
-                              damping: 20,
-                            }}
-                          >
-                            <Icon />
-                          </motion.div>
-                          <motion.div className="w-[45%] text-left pl-6">
-                            <h3 className="text-blue-300 text-lg font-bold md:text-lg">
-                              {item.title}
-                            </h3>
-                            <p className="text-orange-300 text-sm">
-                              {item.company}
-                            </p>
-                            <p className="text-orange-200 italic text-xs">
-                              {item.timeFrame}
-                            </p>
-                          </motion.div>
-                        </>
-                      )}
-                    </motion.div>
-                  );
-                })}
+          {years.map((year) => (
+            <div key={year} className="relative">
+              <div className="surface-strong text-main relative z-20 ml-14 inline-flex rounded-[4px] px-3 py-1 text-sm font-bold md:left-1/2 md:ml-0 md:-translate-x-1/2">
+                {year}
               </div>
-            ))}
-          </div>
+
+              {grouped[year].map((item) => {
+                const titleOnLeft =
+                  item.side === "left" ||
+                  (item.side !== "right" && itemIndex % 2 === 0);
+                itemIndex += 1;
+
+                return (
+                  <TimelineItem
+                    key={`${item.company}-${item.title}-${item.timeFrame}`}
+                    item={item}
+                    titleOnLeft={titleOnLeft}
+                  />
+                );
+              })}
+            </div>
+          ))}
         </div>
       </div>
     </section>
