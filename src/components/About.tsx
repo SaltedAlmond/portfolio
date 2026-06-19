@@ -32,7 +32,9 @@ export default function About() {
           </h1>
           <p className="text-muted mt-6 max-w-2xl text-lg leading-8 sm:text-xl">
             I build thoughtful software, internal tools, and interactive
-            experiences that make complex work easier to understand and use.
+            experiences that make complex work easier to understand and use. I
+            might be one of the shortest volleyball players you&apos;ll meet, but
+            I still play like I&apos;m 6 feet tall, and I make a mean smash burger.
           </p>
 
           <div className="mt-7 flex flex-wrap gap-2">
