@@ -2,7 +2,6 @@
 
 import {
   motion,
-  useReducedMotion,
   useScroll,
   useTransform,
 } from "framer-motion";
@@ -156,7 +155,6 @@ function TimelineItem({
   titleOnLeft: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const reduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
@@ -165,12 +163,6 @@ function TimelineItem({
     scrollYProgress,
     [0, 0.22, 0.5, 0.78, 1],
     [0.3, 0.68, 1, 0.68, 0.3]
-  );
-  const y = useTransform(scrollYProgress, [0, 0.5, 1], [24, 0, -24]);
-  const scale = useTransform(
-    scrollYProgress,
-    [0, 0.5, 1],
-    [0.985, 1, 0.985]
   );
   const Icon = item.type === "education" ? FaGraduationCap : FaBriefcase;
 
@@ -197,11 +189,7 @@ function TimelineItem({
   return (
     <motion.div
       ref={ref}
-      style={
-        reduceMotion
-          ? { opacity: 1 }
-          : { opacity, y, scale }
-      }
+      style={{ opacity }}
       className="relative grid gap-4 py-8 md:grid-cols-[minmax(0,1fr)_48px_minmax(0,1fr)] md:items-start md:gap-6"
     >
       <div className="pl-14 md:hidden">{title}</div>
