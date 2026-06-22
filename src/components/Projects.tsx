@@ -16,13 +16,13 @@ type Project = {
 
 const projects: Project[] = [
   {
-    name: "Portfolio 3D",
-    image: "/images/3dportfolio.png",
-    repo: "SaltedAlmond/Portfolio-3D",
+    name: "ClinWeave",
+    image: "/images/clinweave.png",
+    repo: "SaltedAlmond/clinweave",
     description:
-      "An interactive real-time 3D portfolio built with Three.js and Vite, featuring original models and textures created in 3ds Max, ZBrush, and Substance Painter.",
-    live: "https://amonette-3d.vercel.app",
-    label: "Featured interactive project",
+      "AI-assisted healthcare hackathon project that connects patient history with current notes to support better clinical decisions.",
+    live: "https://clinweave.vercel.app/dashboard",
+    label: "Healthcare Hackathon Project",
   },
   {
     name: "Worlds Apart",
@@ -35,7 +35,7 @@ const projects: Project[] = [
   },
   {
     name: "Ali Monette Portfolio",
-    image: "/images/portfolio.jpg",
+    image: "/images/Ali-Portfolio.png",
     repo: "SaltedAlmond/portfolio",
     description:
       "This responsive portfolio, built with Next.js, TypeScript, Tailwind CSS, and Framer Motion to bring my engineering and creative work into one place.",
@@ -113,7 +113,7 @@ export default function Projects() {
           </p>
         </motion.div>
 
-        <div className="mt-10 grid gap-6 lg:grid-cols-3">
+        <div className="mt-10 grid items-stretch gap-6 lg:grid-cols-3">
           {projects.map((project, index) => {
             const projectLanguages = getTopLanguages(
               languages[project.repo] ?? {}
@@ -126,7 +126,7 @@ export default function Projects() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.5, delay: index * 0.08 }}
-                className="project-card overflow-hidden rounded-[8px]"
+                className="project-card flex h-full flex-col overflow-hidden rounded-[8px]"
               >
                 <div className="relative aspect-[16/10] overflow-hidden">
                   <Image
@@ -142,14 +142,14 @@ export default function Projects() {
                   </p>
                 </div>
 
-                <div className="flex min-h-[300px] flex-col p-6">
+                <div className="flex min-h-[360px] flex-1 flex-col p-6">
                   <h3 className="text-main text-2xl font-bold">{project.name}</h3>
-                  <p className="text-muted mt-3 leading-7">
+                  <p className="text-muted mt-3 min-h-[112px] leading-7">
                     {project.description}
                   </p>
 
                   {projectLanguages.length > 0 && (
-                    <div className="mt-5 flex flex-wrap gap-2">
+                    <div className="mt-5 min-h-[34px] flex flex-wrap gap-2">
                       {projectLanguages.map(({ language, percentage }) => (
                         <span
                           key={language}

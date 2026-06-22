@@ -254,12 +254,14 @@ button {
 }
 
 .project-overlay {
+
   background: linear-gradient(
     to top,
-    rgba(4, 7, 12, 0.96) 0%,
-    rgba(4, 7, 12, 0.68) 48%,
-    rgba(4, 7, 12, 0.08) 100%
+    rgba(4, 7, 12, 0.55) 0%,
+    rgba(4, 7, 12, 0.20) 45%,
+    rgba(4, 7, 12, 0) 100%
   );
+
 }
 
 .project-card {
