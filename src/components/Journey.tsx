@@ -147,6 +147,11 @@ const experiences: Experience[] = [
   },
 ];
 
+const companyUrls: Record<string, string> = {
+  "Case IQ": "https://www.caseiq.com/",
+  "Ross Video": "https://www.rossvideo.com/",
+};
+
 function TimelineItem({
   item,
   titleOnLeft,
@@ -165,11 +170,27 @@ function TimelineItem({
     [0.3, 0.68, 1, 0.68, 0.3]
   );
   const Icon = item.type === "education" ? FaGraduationCap : FaBriefcase;
+  const companyUrl = companyUrls[item.company];
 
   const title = (
     <div className={titleOnLeft ? "md:text-right" : "md:text-left"}>
-      <h3 className="text-accent text-xl font-bold sm:text-2xl">{item.title}</h3>
-      <p className="text-secondary mt-1 font-semibold">{item.company}</p>
+      <h3 className="journey-role text-accent text-xl font-bold sm:text-2xl">
+        {item.title}
+      </h3>
+      <p className="text-secondary mt-1 font-semibold">
+        {companyUrl ? (
+          <a
+            href={companyUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline decoration-current/35 underline-offset-4 transition-[text-decoration-color] hover:decoration-current"
+          >
+            {item.company}
+          </a>
+        ) : (
+          item.company
+        )}
+      </p>
       <p className="text-muted mt-1 text-sm italic">{item.timeFrame}</p>
     </div>
   );

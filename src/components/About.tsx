@@ -31,7 +31,7 @@ export default function About() {
           <p className="eyebrow mb-4">
             Software developer · professor · toolsmith
           </p>
-          <h1 className="text-main text-5xl leading-[1.05] font-bold sm:text-6xl lg:text-7xl">
+          <h1 className="identity-title text-main text-5xl leading-[1.05] font-bold sm:text-6xl lg:text-7xl">
             Ali Monette
           </h1>
           <p className="text-muted mt-6 max-w-2xl text-lg leading-8 sm:text-xl">

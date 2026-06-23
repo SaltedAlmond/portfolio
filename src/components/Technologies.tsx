@@ -178,7 +178,9 @@ export default function Technologies() {
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.45, delay: index * 0.06 }}
           >
-            <h3 className="text-secondary text-sm font-bold">{group.title}</h3>
+            <h3 className="skill-group-title text-secondary text-sm font-bold">
+              {group.title}
+            </h3>
             <ul className="mt-4 flex flex-wrap gap-2">
               {group.items.map((item) => (
                 <li key={item} className="skill-chip px-3 py-1.5 text-sm">
