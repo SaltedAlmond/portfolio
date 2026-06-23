@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { FaDownload, FaGithub, FaLinkedin } from "react-icons/fa";
 import { MdOutlineEmail } from "react-icons/md";
 
+import { RESUME_URL } from "@/constants";
+
 const contactLinks = [
   {
     icon: FaLinkedin,
@@ -49,14 +51,21 @@ export default function Contact() {
                 key={label}
                 href={href}
                 target={href.startsWith("http") ? "_blank" : undefined}
-                rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                rel={
+                  href.startsWith("http") ? "noopener noreferrer" : undefined
+                }
                 className="secondary-link"
               >
                 <Icon aria-hidden="true" />
                 {label}
               </a>
             ))}
-            <a href="/resume.pdf" download className="primary-link">
+            <a
+              href={RESUME_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="primary-link"
+            >
               <FaDownload aria-hidden="true" />
               Resume
             </a>

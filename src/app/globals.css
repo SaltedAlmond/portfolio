@@ -239,6 +239,42 @@ button {
   color: var(--muted);
 }
 
+.technology-marquee {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+}
+
+.technology-marquee-track {
+  animation: technology-marquee 105s linear infinite;
+  will-change: transform;
+}
+
+.technology-marquee:hover .technology-marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes technology-marquee {
+  from {
+    transform: translateX(-50%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
 .timeline-line {
   background: var(--line);
 }
@@ -290,5 +326,10 @@ button {
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .technology-marquee-track {
+    animation: none;
+    transform: translateX(0);
   }
 }

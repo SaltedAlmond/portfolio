@@ -22,10 +22,7 @@ export const metadata: Metadata = {
 const themeScript = `
   try {
     const savedTheme = localStorage.getItem("portfolio-theme");
-    const preferredTheme = window.matchMedia("(prefers-color-scheme: light)").matches
-      ? "light"
-      : "dark";
-    document.documentElement.dataset.theme = savedTheme || preferredTheme;
+    document.documentElement.dataset.theme = savedTheme === "light" ? "light" : "dark";
   } catch {
     document.documentElement.dataset.theme = "dark";
   }
@@ -35,6 +32,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"
+      data-theme="dark"
       className={`${jura.variable} ${openSans.variable}`}
       suppressHydrationWarning
     >

@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { FaArrowDown, FaDownload } from "react-icons/fa";
 
+import { RESUME_URL } from "@/constants";
+
 const focusAreas = [
   "Developer platforms",
   "AI-assisted tools",
@@ -26,15 +28,18 @@ export default function About() {
           transition={{ duration: 0.7, ease: "easeOut" }}
           className="min-w-0 max-w-3xl"
         >
-          <p className="eyebrow mb-4">Software developer · professor · toolsmith</p>
+          <p className="eyebrow mb-4">
+            Software developer · professor · toolsmith
+          </p>
           <h1 className="text-main text-5xl leading-[1.05] font-bold sm:text-6xl lg:text-7xl">
             Ali Monette
           </h1>
           <p className="text-muted mt-6 max-w-2xl text-lg leading-8 sm:text-xl">
             I build thoughtful software, internal tools, and interactive
             experiences that make complex work easier to understand and use. I
-            might be one of the shortest volleyball players you&apos;ll meet, but
-            I still play like I&apos;m 6 feet tall, and I make a mean smash burger.
+            might be one of the shortest volleyball players you&apos;ll meet,
+            but I still play like I&apos;m 6 feet tall, and I make a mean smash
+            burger.
           </p>
 
           <div className="mt-7 flex flex-wrap gap-2">
@@ -51,7 +56,7 @@ export default function About() {
               <FaArrowDown aria-hidden="true" />
             </a>
             <a
-              href="/resume.pdf"
+              href={RESUME_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="secondary-link"
