@@ -127,6 +127,15 @@ export default function Projects() {
   }, []);
 
   useEffect(() => {
+    const screenshotUrls = projects.flatMap((project) => project.screenshots ?? []);
+
+    screenshotUrls.forEach((url) => {
+      const image = new window.Image();
+      image.src = url;
+    });
+  }, []);
+
+  useEffect(() => {
     if (!activeProject) return;
     const screenshotCount = activeProject.screenshots?.length ?? 0;
 
@@ -290,94 +299,85 @@ export default function Projects() {
 
       {activeProject && activeScreenshot && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-4 py-6 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 px-4 py-6 backdrop-blur-sm"
           role="dialog"
           aria-modal="true"
           aria-label={`${activeProject.name} screenshots`}
           onClick={() => setActiveProject(null)}
         >
-          <div
-            className="surface relative flex max-h-full w-full max-w-5xl flex-col overflow-hidden rounded-[8px]"
-            onClick={(event) => event.stopPropagation()}
+          <button
+            type="button"
+            aria-label="Close screenshots"
+            onClick={() => setActiveProject(null)}
+            className="icon-button absolute right-4 top-4 z-20 border-white/20 bg-black/45 text-white hover:bg-white/10 sm:right-6 sm:top-6"
           >
-            <div className="flex items-center justify-between gap-4 border-b border-theme px-4 py-3 sm:px-5">
-              <div>
-                <p className="eyebrow">Screenshots</p>
-                <h3 className="text-main text-lg font-bold sm:text-xl">
-                  {activeProject.name}
-                </h3>
-              </div>
-              <button
-                type="button"
-                aria-label="Close screenshots"
-                onClick={() => setActiveProject(null)}
-                className="icon-button"
-              >
-                <FaXmark aria-hidden="true" />
-              </button>
-            </div>
+            <FaXmark aria-hidden="true" />
+          </button>
 
-            <div className="relative grid min-h-0 flex-1 place-items-center bg-[var(--surface-soft)] px-3 py-5 sm:px-8">
-              {activeScreenshots.length > 1 && (
+          {activeScreenshots.length > 1 && (
+            <button
+              type="button"
+              aria-label="Previous screenshot"
+              onClick={(event) => {
+                event.stopPropagation();
+                setActiveScreenshotIndex((current) =>
+                  getPreviousScreenshotIndex(current, activeScreenshots.length)
+                );
+              }}
+              className="icon-button absolute left-3 top-1/2 z-20 -translate-y-1/2 border-white/20 bg-black/45 text-white hover:bg-white/10 sm:left-6"
+            >
+              <FaChevronLeft aria-hidden="true" />
+            </button>
+          )}
+
+          <Image
+            src={activeScreenshot}
+            alt={`${activeProject.name} screenshot ${activeScreenshotIndex + 1}`}
+            width={1206}
+            height={2420}
+            priority
+            unoptimized
+            className="h-auto max-h-[86vh] w-auto max-w-[min(86vw,430px)] rounded-[24px] object-contain shadow-2xl"
+            onClick={(event) => event.stopPropagation()}
+          />
+
+          {activeScreenshots.length > 1 && (
+            <button
+              type="button"
+              aria-label="Next screenshot"
+              onClick={(event) => {
+                event.stopPropagation();
+                setActiveScreenshotIndex((current) =>
+                  getNextScreenshotIndex(current, activeScreenshots.length)
+                );
+              }}
+              className="icon-button absolute right-3 top-1/2 z-20 -translate-y-1/2 border-white/20 bg-black/45 text-white hover:bg-white/10 sm:right-6"
+            >
+              <FaChevronRight aria-hidden="true" />
+            </button>
+          )}
+
+          {activeScreenshots.length > 1 && (
+            <div
+              className="absolute bottom-4 left-1/2 z-20 flex -translate-x-1/2 justify-center gap-2 sm:bottom-6"
+              onClick={(event) => event.stopPropagation()}
+            >
+              {activeScreenshots.map((screenshot, index) => (
                 <button
                   type="button"
-                  aria-label="Previous screenshot"
-                  onClick={() =>
-                    setActiveScreenshotIndex((current) =>
-                      getPreviousScreenshotIndex(current, activeScreenshots.length)
-                    )
-                  }
-                  className="icon-button absolute left-3 top-1/2 z-10 -translate-y-1/2"
-                >
-                  <FaChevronLeft aria-hidden="true" />
-                </button>
-              )}
-
-              <div className="relative h-[min(72vh,760px)] w-full max-w-[380px] overflow-hidden rounded-[28px] border border-theme bg-black shadow-2xl">
-                <Image
-                  src={activeScreenshot}
-                  alt={`${activeProject.name} screenshot ${activeScreenshotIndex + 1}`}
-                  fill
-                  sizes="(max-width: 640px) 82vw, 380px"
-                  className="object-contain"
+                  key={screenshot}
+                  aria-label={`Show screenshot ${index + 1}`}
+                  aria-current={index === activeScreenshotIndex}
+                  onClick={() => setActiveScreenshotIndex(index)}
+                  className={`h-2.5 w-2.5 rounded-full transition ${
+                    index === activeScreenshotIndex
+                      ? "bg-white"
+                      : "bg-white/35 hover:bg-white/70"
+                  }`}
                 />
-              </div>
-
-              {activeScreenshots.length > 1 && (
-                <button
-                  type="button"
-                  aria-label="Next screenshot"
-                  onClick={() =>
-                    setActiveScreenshotIndex((current) =>
-                      getNextScreenshotIndex(current, activeScreenshots.length)
-                    )
-                  }
-                  className="icon-button absolute right-3 top-1/2 z-10 -translate-y-1/2"
-                >
-                  <FaChevronRight aria-hidden="true" />
-                </button>
-              )}
+              ))}
             </div>
-
-            {activeScreenshots.length > 1 && (
-              <div className="flex justify-center gap-2 border-t border-theme px-5 py-4">
-                {activeScreenshots.map((screenshot, index) => (
-                  <button
-                    type="button"
-                    key={screenshot}
-                    aria-label={`Show screenshot ${index + 1}`}
-                    aria-current={index === activeScreenshotIndex}
-                    onClick={() => setActiveScreenshotIndex(index)}
-                    className={`h-2.5 w-2.5 rounded-full transition ${
-                      index === activeScreenshotIndex
-                        ? "bg-[var(--accent)]"
-                        : "bg-[var(--line)] hover:bg-[var(--muted)]"
-                    }`}
-                  />
-                ))}
-              </div>
             )}
-          </div>
         </div>
       )}
     </section>
