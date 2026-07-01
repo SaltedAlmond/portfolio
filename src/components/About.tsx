@@ -35,11 +35,10 @@ export default function About() {
             Ali Monette
           </h1>
           <p className="text-muted mt-6 max-w-2xl text-lg leading-8 sm:text-xl">
-            I build thoughtful software, internal tools, and interactive
-            experiences that make complex work easier to understand and use. I
-            might be one of the shortest volleyball players you&apos;ll meet,
-            but I still play like I&apos;m 6 feet tall, and I make a mean smash
-            burger.
+            I build thoughtful software, developer tools, and AI-assisted
+            experiences that make complex problems easier to solve. Outside of
+            software, you&apos;ll usually find me teaching, playing competitive
+            volleyball, or perfecting my next smash burger.
           </p>
 
           <div className="mt-7 flex flex-wrap gap-2">

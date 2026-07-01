@@ -28,7 +28,7 @@ const experiences: Experience[] = [
     type: "education",
     description: [
       <>
-        Graduated from the{" "}
+        Discovered my passion for building interactive experiences while developing skills in programming, game design, and 3D art. This program sparked my interest in solving technical and creative problems through software.{" "}
         <a
           href="https://www.algonquincollege.com/mediaanddesign/program/game-development/"
           target="_blank"
@@ -48,7 +48,7 @@ const experiences: Experience[] = [
     timeFrame: "April 2017 - May 2017",
     type: "work",
     description: [
-      "Contributed 3D modeling, texturing, animation, sound, and game design to a Unity VR experience for the National Science & Innovation Gala.",
+      "My first professional role, where I contributed to a Unity VR experience for the National Science & Innovation Gala. It gave me valuable industry experience and introduced me to the importance of collaboration and professional networking.",
     ],
   },
   {
@@ -59,10 +59,9 @@ const experiences: Experience[] = [
     type: "work",
     description: [
       <>
-        Helped recreate Algonquin College&apos;s DARE District in Unity VR,
-        contributing modeling, textures, and lighting.{" "}
+        After building relationships through the Game Development program, I was offered a contract at Algonquin College to help recreate the DARE District in Unity VR. This experience strengthened both my technical skills and reinforced how meaningful professional relationships can shape new opportunities.{" "}
         <a
-          href="https://www.youtube.com/watch?v=Uis4SCYNjrM&list=WL"
+          href="https://www.youtube.com/watch?v=Uis4SCYNjrM"
           target="_blank"
           rel="noopener noreferrer"
           className="text-accent underline"
@@ -80,7 +79,7 @@ const experiences: Experience[] = [
     timeFrame: "January 2020 - December 2021",
     type: "work",
     description: [
-      "Joined Case IQ through a Computer Engineering internship and was promoted to QA Lead within the first month after demonstrating initiative and strong issue detection.",
+      "My first step into professional software engineering, where I developed a strong foundation in software quality, debugging, and problem solving. The experience led to a promotion to QA Lead within my first month and sparked my interest in improving engineering workflows through automation.",
     ],
   },
   {
@@ -90,6 +89,7 @@ const experiences: Experience[] = [
     timeFrame: "September 2018 - December 2021",
     type: "education",
     description: [
+      "Wanting to strengthen my software engineering and programming skills, I returned to Algonquin College to study Computer Engineering Technology. This marked the beginning of my transition from game development into software engineering, backend systems, and automation.",
       <>
         Graduated with honours from the{" "}
         <a
@@ -106,43 +106,33 @@ const experiences: Experience[] = [
   },
   {
     year: 2022,
-    title: "Software Developer - Delivery",
+    title: "Software Developer",
     company: "Case IQ",
-    timeFrame: "January 2022 - March 2023",
+    timeFrame: "January 2022 - March 2025",
     type: "work",
     description: [
-      "Moved into software development after the internship, implementing custom features and integrations for client web applications.",
+      "Transitioned from QA into software development, building enterprise applications, backend integrations, and automation for large-scale customer deployments. As I worked on modernizing legacy customer environments, I discovered how much I enjoyed solving engineering challenges through automation and building tools that make developers more productive.",
     ],
   },
   {
     year: 2023,
-    title: "Software Developer - Upgrade",
-    company: "Case IQ",
-    timeFrame: "September 2023 - March 2025",
-    type: "work",
-    description: [
-      "Rejoined Case IQ to modernize and upgrade legacy client applications while improving performance, reliability, and maintainability.",
-    ],
-  },
-  {
-    year: 2023,
-    title: "Part-time Professor",
+    title: "Professor",
     company: "Algonquin College",
     timeFrame: "September 2023 - Present",
     type: "work",
     description: [
-      "Teach programming, applied math, game development, and asset creation while helping students build practical skills with C++, Unreal Engine, GitHub, JIRA, 3ds Max, ZBrush, and Substance Painter.",
+      "As my software engineering career grew, I was invited back to Algonquin College to teach Game Development. It has become an opportunity to give back to the program that launched my own career while continually refining my understanding of software engineering through teaching and mentorship.",
     ],
   },
   {
     year: 2025,
-    title: "Tools Developer & Specialist",
+    title: "Software Developer - Test Automation & AI Tools",
     company: "Ross Video",
     timeFrame: "October 2025 - June 2026",
     type: "work",
-    side: "left",
+    side: "right",
     description: [
-      "Joined Ross Video to build internal developer and QA tooling across the full project lifecycle. Took solutions from architecture through implementation and deployment, spanning AI-assisted test analysis, documentation automation, security workflows, access control, CI/CD infrastructure, and enterprise integrations.",
+      "Joined Ross Video to build internal engineering platforms that improved developer productivity across QA, DevOps, and software engineering. This role brought together everything I’d learned throughout my career; backend development, automation, infrastructure, AI-assisted tooling, and end-to-end ownership of technical solutions.",
     ],
   },
 ];
@@ -263,7 +253,7 @@ export default function Journey() {
           transition={{ duration: 0.55, ease: "easeOut" }}
           className="mx-auto max-w-2xl text-center"
         >
-          <p className="eyebrow mb-3">The path here</p>
+          <p className="eyebrow mb-3">How I Got Here</p>
           <h2 className="section-title">My journey</h2>
           <p className="section-copy mt-4">
             A career shaped by creative technology, software engineering,
