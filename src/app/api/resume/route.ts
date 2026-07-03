@@ -1,5 +1,5 @@
 const GOOGLE_DOC_PDF_URL =
-  "https://docs.google.com/document/d/1fiBTxal7QErJ7Mzaphwjq61zZ3uWp099sRmGDYuMPaE/export?format=pdf";
+  "https://docs.google.com/document/d/120enFLxzllOLew3KZHPoGALw-WUMo_So_TeEe6LdZ5U/edit?usp=sharing";
 
 export const dynamic = "force-dynamic";
 
