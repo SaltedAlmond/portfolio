@@ -84,7 +84,7 @@ export default function About() {
               />
             </div>
           </div>
-          <div className="surface-strong mt-3 flex flex-col gap-2 rounded-[6px] px-4 py-3 text-sm min-[430px]:flex-row min-[430px]:items-center min-[430px]:justify-between">
+          <div className="raised-surface mt-3 flex flex-col gap-2 rounded-[6px] px-4 py-3 text-sm min-[430px]:flex-row min-[430px]:items-center min-[430px]:justify-between">
             <span className="text-muted">Based in Ottawa, Canada</span>
             <span className="flex items-center gap-2 text-accent">
               <span className="h-2 w-2 rounded-full bg-current" />

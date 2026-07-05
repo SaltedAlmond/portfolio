@@ -270,7 +270,7 @@ export default function Journey() {
 
           {years.map((year) => (
             <div key={year} className="relative">
-              <div className="surface-strong text-main relative z-20 ml-14 inline-flex rounded-[4px] px-3 py-1 text-sm font-bold md:left-1/2 md:ml-0 md:-translate-x-1/2">
+              <div className="timeline-year text-main relative z-20 ml-14 inline-flex rounded-[4px] px-3 py-1 text-sm font-bold md:left-1/2 md:ml-0 md:-translate-x-1/2">
                 {year}
               </div>
 

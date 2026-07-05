@@ -212,7 +212,7 @@ export default function Technologies() {
                     className="group relative flex w-24 shrink-0 items-center justify-center py-6 sm:w-28"
                   >
                     <span
-                      className="flex h-12 w-12 items-center justify-center rounded-[8px] border border-theme text-2xl transition-transform duration-200 group-hover:-translate-y-1 sm:h-14 sm:w-14 sm:text-3xl"
+                      className="technology-icon-tile flex h-12 w-12 items-center justify-center rounded-[8px] border border-theme text-2xl transition-transform duration-200 group-hover:-translate-y-1 sm:h-14 sm:w-14 sm:text-3xl"
                       style={{
                         color,
                         background: `color-mix(in srgb, ${color} 14%, var(--surface))`,
