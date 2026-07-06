@@ -310,18 +310,7 @@ button {
 .raised-surface::before,
 .timeline-year::before,
 .timeline-marker::before {
-  position: absolute;
-  inset: 0 0 auto;
-  height: 45%;
-  border-radius: inherit;
-  background: linear-gradient(
-    to bottom,
-    color-mix(in srgb, var(--specular) 76%, transparent),
-    color-mix(in srgb, var(--specular) 18%, transparent) 38%,
-    transparent
-  );
-  content: "";
-  pointer-events: none;
+  content: none;
 }
 
 .skill-chip::after,
