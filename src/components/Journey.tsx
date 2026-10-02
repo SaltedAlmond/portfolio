@@ -1,12 +1,13 @@
 "use client";
 
 import {
+  AnimatePresence,
   motion,
   useScroll,
   useTransform,
 } from "framer-motion";
-import type { ReactNode } from "react";
-import { useRef } from "react";
+import type { MouseEvent, ReactNode } from "react";
+import { useId, useRef, useState } from "react";
 import { FaBriefcase, FaGraduationCap } from "react-icons/fa";
 
 type Experience = {
@@ -135,11 +136,22 @@ const experiences: Experience[] = [
       "Joined Ross Video to build internal engineering platforms that improved developer productivity across QA, DevOps, and software engineering. This role brought together everything I’d learned throughout my career; backend development, automation, infrastructure, AI-assisted tooling, and end-to-end ownership of technical solutions.",
     ],
   },
+  {
+    year: 2026,
+    title: "Software Engineer II - Site Reliability Engineering",
+    company: "Warner Bros. Discovery",
+    timeFrame: "August 2026 - Present",
+    type: "work",
+    description: [
+      "Building platforms at Ross Video showed me how much I enjoyed the infrastructure underneath them, so I joined Warner Bros. Discovery’s Site Reliability Engineering team supporting CNN. Working on production systems at this scale has become my path to learning AWS and cloud infrastructure in depth; managing resources through Terraform, supporting Kubernetes environments, owning DNS, and keeping the services behind CNN reliable and cost-efficient.",
+    ],
+  },
 ];
 
 const companyUrls: Record<string, string> = {
   "Case IQ": "https://www.caseiq.com/",
   "Ross Video": "https://www.rossvideo.com/",
+  "Warner Bros. Discovery": "https://www.wbd.com/",
 };
 
 function TimelineItem({
@@ -150,6 +162,8 @@ function TimelineItem({
   titleOnLeft: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
+  const [expanded, setExpanded] = useState(false);
+  const descriptionId = useId();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
@@ -185,27 +199,82 @@ function TimelineItem({
     </div>
   );
 
-  const description = (
-    <div
-      className={`text-muted leading-7 ${
-        titleOnLeft ? "md:text-left" : "md:text-right"
-      }`}
-    >
-      {item.description.map((line, index) => (
-        <p key={index}>{line}</p>
-      ))}
-    </div>
-  );
+  const toggle = () => setExpanded((value) => !value);
+
+  // Clicking anywhere on the entry toggles it, except on links inside it.
+  const handleRowClick = (event: MouseEvent<HTMLDivElement>) => {
+    if ((event.target as HTMLElement).closest("a, button")) return;
+    toggle();
+  };
+
+  const renderDescription = (variant: "mobile" | "desktop") => {
+    const panelId = `${descriptionId}-${variant}`;
+    // On desktop, keep the toggle icon next to the timeline line.
+    const iconTowardLine = variant === "desktop" && !titleOnLeft;
+
+    return (
+      <div
+        className={`text-muted leading-7 ${
+          titleOnLeft ? "md:text-left" : "md:text-right"
+        }`}
+      >
+        <button
+          type="button"
+          onClick={toggle}
+          aria-expanded={expanded}
+          aria-controls={panelId}
+          className={`journey-toggle text-accent inline-flex min-h-11 cursor-pointer items-center gap-3 text-sm font-semibold ${
+            iconTowardLine ? "flex-row-reverse" : ""
+          }`}
+        >
+          <span
+            aria-hidden="true"
+            className="journey-toggle-icon relative flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-current"
+          >
+            <span className="absolute h-0.5 w-3 rounded-full bg-current" />
+            <span
+              className={`absolute h-3 w-0.5 rounded-full bg-current transition-transform duration-300 ${
+                expanded ? "scale-y-0" : ""
+              }`}
+            />
+          </span>
+          <span className="journey-toggle-label">
+            {expanded ? "Hide the story" : "Read the story"}
+          </span>
+        </button>
+
+        <AnimatePresence initial={false}>
+          {expanded && (
+            <motion.div
+              id={panelId}
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="overflow-hidden"
+            >
+              <div className="space-y-3 pt-2">
+                {item.description.map((line, index) => (
+                  <p key={index}>{line}</p>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    );
+  };
 
   return (
     <motion.div
       ref={ref}
       style={{ opacity }}
-      className="relative grid gap-4 py-8 md:grid-cols-[minmax(0,1fr)_48px_minmax(0,1fr)] md:items-start md:gap-6"
+      onClick={handleRowClick}
+      className="journey-item relative grid cursor-pointer gap-4 py-8 md:grid-cols-[minmax(0,1fr)_48px_minmax(0,1fr)] md:items-start md:gap-6"
     >
       <div className="pl-14 md:hidden">{title}</div>
 
-      <div className="hidden md:block">{titleOnLeft ? title : description}</div>
+      <div className="hidden md:block">{titleOnLeft ? title : renderDescription("desktop")}</div>
 
       <div className="absolute left-0 top-9 z-10 md:static md:flex md:justify-center">
         <div className="timeline-marker flex h-10 w-10 items-center justify-center rounded-full text-base">
@@ -213,9 +282,9 @@ function TimelineItem({
         </div>
       </div>
 
-      <div className="hidden md:block">{titleOnLeft ? description : title}</div>
+      <div className="hidden md:block">{titleOnLeft ? renderDescription("desktop") : title}</div>
 
-      <div className="pl-14 md:hidden">{description}</div>
+      <div className="pl-14 md:hidden">{renderDescription("mobile")}</div>
     </motion.div>
   );
 }
